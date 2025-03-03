@@ -239,6 +239,7 @@
     <ClInclude Include="include\AESCipher.h" />
     <ClInclude Include="include\CaesarCipher.h" />
     <ClInclude Include="include\FileManager.h" />
+    <ClInclude Include="include\lib.h" />
     <ClInclude Include="include\Logger.h" />
     <ClInclude Include="include\Tests.h" />
     <ClInclude Include="include\XORCipher.h" />

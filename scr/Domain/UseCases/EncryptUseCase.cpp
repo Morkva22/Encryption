@@ -1,26 +1,34 @@
-// scr/Domain/UseCases/EncryptUseCase.h
+// scr/Domain/UseCases/EncryptUseCase.cpp
 
-        #ifndef ENCRYPT_USE_CASE_H
-        #define ENCRYPT_USE_CASE_H
+#include "EncryptUseCase.h"
+#include <iomanip>
+#include <sstream>
 
-        #include "../Repositories/EncryptionRepository.h"
-        #include "../../Utils/Ciphers/Caesar/CaesarCipher.h"
-        #include "../../Utils/Ciphers/XOR/XorCipher.h"
-        #include "../../Utils/Ciphers/AES/AesCipher.h"
-        #include "../../Data/Providers/KeyProvider.h"
+namespace Encryption {
 
-        namespace Encryption {
+    EncryptUseCase::EncryptUseCase(EncryptionRepository* repository, KeyProvider* keyProvider)
+        : repository(repository), keyProvider(keyProvider) {}
 
-        class EncryptUseCase {
-        public:
-            EncryptUseCase(EncryptionRepository* repository, KeyProvider* keyProvider);
-            string execute(EncryptionData data);
+    string EncryptUseCase::execute(EncryptionData data) {
+        string key = keyProvider->getKey(data.getAlgorithm());
+        Cipher* cipher;
+        switch (data.getAlgorithm()) {
+        case 1:
+            cipher = new CaesarCipher();
+            break;
+        case 2:
+            cipher = new XorCipher();
+            break;
+        case 3:
+            cipher = new AesCipher();
+            break;
+        default:
+            return "Invalid algorithm";
+        }
 
-        private:
-            EncryptionRepository* repository;
-            KeyProvider* keyProvider;
-        };
+        string encryptedText = cipher->encrypt(data.getText(), key);
+        delete cipher;
+        return encryptedText;
+    }
 
-        } // namespace Encryption
-
-        #endif
+} // namespace Encryption

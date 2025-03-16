@@ -1,39 +1,30 @@
 // scr/UI/Presenter.cpp
 
 #include "Presenter.h"
-#include <iomanip>
-#include <sstream>
 
 namespace Encryption {
 
-    Presenter::Presenter(View* view) : view(view) {}
+    Presenter::Presenter(View* view, EncryptUseCase* encryptUseCase, DecryptUseCase* decryptUseCase, EncryptionRepository* repository)
+        : view(view), encryptUseCase(encryptUseCase), decryptUseCase(decryptUseCase), repository(repository) {}
 
     void Presenter::run() {
-        string text = view->getText();
-        string key = view->getKey();
-        int algorithm = view->getAlgorithm();
+        while (true) {
+            int algorithm = view->getAlgorithm();
+            string text = view->getText();
+            string key = view->getKey();
 
-        Cipher* cipher;
-        switch (algorithm) {
-        case 1:
-            cipher = new CaesarCipher();
-            break;
-        case 2:
-            cipher = new XorCipher();
-            break;
-        default:
-            cout << "Invalid algorithm" << endl;
-            return;
+            EncryptionData data(text, key, algorithm);
+            repository->save(data);
+
+            string encryptedText = encryptUseCase->execute(data);
+            string decryptedText = decryptUseCase->execute(data);
+
+            view->showResult(encryptedText, decryptedText);
+
+            if (!view->askToContinue()) {
+                break;
+            }
         }
-
-        string encryptedText = cipher->encrypt(text, key);
-        string decryptedText = cipher->decrypt(encryptedText, key);
-
-        // Виводимо результат у форматі "Algorithm Encrypted: ... Decrypted: ..."
-        cout << (algorithm == 1 ? "Caesar" : algorithm == 2 ? "XOR" : "AES") << " Encrypted: " << encryptedText << endl;
-        cout << (algorithm == 1 ? "Caesar" : algorithm == 2 ? "XOR" : "AES") << " Decrypted: " << decryptedText << endl;
-
-        delete cipher;
     }
 
 } // namespace Encryption

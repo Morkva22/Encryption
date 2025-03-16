@@ -1,3 +1,5 @@
+// scr/Domain/Entities/EncryptionData.h
+
 #ifndef ENCRYPTION_DATA_H
 #define ENCRYPTION_DATA_H
 

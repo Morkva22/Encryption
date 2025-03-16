@@ -1,3 +1,5 @@
+// scr/UI/View.h
+
 #ifndef VIEW_H
 #define VIEW_H
 
@@ -11,7 +13,8 @@ namespace Encryption {
         virtual string getText() = 0;
         virtual string getKey() = 0;
         virtual int getAlgorithm() = 0;
-        virtual void showResult(const string& result) = 0;
+        virtual void showResult(const string& encryptedResult, const string& decryptedResult) = 0;
+        virtual bool askToContinue() = 0;
     };
 
 } // namespace Encryption

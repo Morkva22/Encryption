@@ -1,9 +1,10 @@
+// scr/Utils/Ciphers/Cipher.h
+
 #ifndef CIPHER_H
 #define CIPHER_H
 
+#include "../../Utils.h"
 #include "../../lib/lib.h"
-#include "../Utils.h"
-
 namespace Encryption {
 
     class Cipher {

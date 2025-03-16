@@ -1,3 +1,4 @@
+// scr/UI/View.cpp
 
 #include "View.h"
 
@@ -27,8 +28,17 @@ namespace Encryption {
             return algorithm;
         }
 
-        void showResult(const string& result) override {
-            cout << "Result: " << result << endl;
+        void showResult(const string& encryptedResult, const string& decryptedResult) override {
+            cout << "Encrypted: " << encryptedResult << endl;
+            cout << "Decrypted: " << decryptedResult << endl;
+        }
+
+        bool askToContinue() override {
+            cout << "Continue? (y/n): ";
+            char answer;
+            cin >> answer;
+            cin.ignore(); // Consume newline
+            return answer == 'y';
         }
     };
 

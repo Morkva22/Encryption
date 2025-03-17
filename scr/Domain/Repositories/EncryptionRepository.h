@@ -14,6 +14,15 @@ namespace Encryption {
         virtual EncryptionData get() = 0;
     };
 
+    class InMemoryEncryptionRepository : public EncryptionRepository {
+    public:
+        void save(const EncryptionData& data) override;
+        EncryptionData get() override;
+
+    private:
+        EncryptionData data;
+    };
+
 } // namespace Encryption
 
 #endif

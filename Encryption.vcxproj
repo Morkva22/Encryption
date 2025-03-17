@@ -321,6 +321,7 @@
     <ClCompile Include="test\Unit\UseCases\UseCases.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="scr\Data\Data.h" />
     <ClInclude Include="scr\Data\Mappers\EncryptionMapper.h" />
     <ClInclude Include="scr\Data\Parsers\JsonParser.h" />
     <ClInclude Include="scr\Data\Parsers\ParserInterface.h" />

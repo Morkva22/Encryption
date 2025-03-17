@@ -17,6 +17,15 @@ namespace Encryption {
         virtual bool askToContinue() = 0;
     };
 
+    class ConsoleView : public View {
+    public:
+        string getText() override;
+        string getKey() override;
+        int getAlgorithm() override;
+        void showResult(const string& encryptedResult, const string& decryptedResult) override;
+        bool askToContinue() override;
+    };
+
 } // namespace Encryption
 
 #endif

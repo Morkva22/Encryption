@@ -4,18 +4,14 @@
 
 namespace Encryption {
 
-    class InMemoryEncryptionRepository : public EncryptionRepository {
-    public:
-        void save(const EncryptionData& data) override {
-            this->data = data;
-        }
+    InMemoryEncryptionRepository::InMemoryEncryptionRepository() {} // Виправлення конструктора
 
-        EncryptionData get() override {
-            return data;
-        }
+    void InMemoryEncryptionRepository::save(const EncryptionData& data) {
+        this->data = data;
+    }
 
-    private:
-        EncryptionData data;
-    };
+    EncryptionData InMemoryEncryptionRepository::get() {
+        return data;
+    }
 
 } // namespace Encryption

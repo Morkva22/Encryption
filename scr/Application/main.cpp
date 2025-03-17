@@ -5,7 +5,7 @@
 #include "../Domain/UseCases/EncryptUseCase.h"
 #include "../Domain/UseCases/DecryptUseCase.h"
 #include "../Domain/Repositories/EncryptionRepository.h"
-#include "../Data/Providers/KeyProvider.h"
+#include "../Data/Providers/KeyProvider/KeyProvider.h"
 
 using namespace Encryption;
 

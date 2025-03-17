@@ -1,3 +1,5 @@
+// scr/Data/Providers/KeyProvider.h
+
 #ifndef KEY_PROVIDER_H
 #define KEY_PROVIDER_H
 
@@ -9,6 +11,11 @@ namespace Encryption {
     public:
         virtual ~KeyProvider() = default;
         virtual string getKey(int algorithm) = 0;
+    };
+
+    class FileKeyProvider : public KeyProvider {
+    public:
+        string getKey(int algorithm) override;
     };
 
 } // namespace Encryption

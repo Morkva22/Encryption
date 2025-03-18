@@ -1,28 +1,27 @@
-// scr/Domain/Repositories/EncryptionRepository.h
-
 #ifndef ENCRYPTION_REPOSITORY_H
 #define ENCRYPTION_REPOSITORY_H
 
-#include "../Entities/EncryptionData.h"
+#include "../../Data/Data.h"
 
 namespace Encryption {
 
     class EncryptionRepository {
     public:
         virtual ~EncryptionRepository() = default;
-        virtual void save(const EncryptionData& data) = 0;
-        virtual EncryptionData get() = 0;
+        virtual void save(const Data::EncryptionData& data) = 0;
+        virtual Data::EncryptionData get() = 0;
     };
 
     class InMemoryEncryptionRepository : public EncryptionRepository {
     public:
-        void save(const EncryptionData& data) override;
-        EncryptionData get() override;
+        InMemoryEncryptionRepository(); // Конструктор
+        void save(const Data::EncryptionData& data) override;
+        Data::EncryptionData get() override;
 
     private:
-        EncryptionData data;
+        Data::EncryptionData data;
     };
 
 } // namespace Encryption
 
-#endif
+#endif // ENCRYPTION_REPOSITORY_H

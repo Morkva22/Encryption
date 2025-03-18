@@ -1,5 +1,3 @@
-// scr/UI/Presenter.h
-
 #ifndef PRESENTER_H
 #define PRESENTER_H
 
@@ -22,6 +20,6 @@ namespace Encryption {
         EncryptionRepository* repository;
     };
 
-} // namespace Encryption
+} 
 
 #endif

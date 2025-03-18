@@ -8,14 +8,14 @@
 #include "../../Utils/Ciphers/XOR/XorCipher.h"
 #include "../../Utils/Ciphers/AES/AesCipher.h"
 #include "../../Data/Providers/KeyProvider/KeyProvider.h"
-#include "../../lib/lib.h"
+#include "../../Data/Data.h"
 
 namespace Encryption {
 
     class DecryptUseCase {
     public:
         DecryptUseCase(EncryptionRepository* repository, KeyProvider* keyProvider);
-        string execute(EncryptionData data);
+        std::string decrypt(const Data::EncryptionData& data); // Заміна execute на decrypt
 
     private:
         EncryptionRepository* repository;

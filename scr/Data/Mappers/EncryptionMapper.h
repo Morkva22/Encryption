@@ -3,7 +3,7 @@
 #ifndef ENCRYPTION_MAPPER_H
 #define ENCRYPTION_MAPPER_H
 
-#include "../../Data/"
+#include "../Data.h"
 #include "../../Domain/Entities/EncryptionData.h"
 
 namespace Encryption {

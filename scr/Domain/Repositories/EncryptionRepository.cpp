@@ -1,17 +1,15 @@
-// scr/Domain/Repositories/EncryptionRepository.cpp
-
 #include "EncryptionRepository.h"
 
-namespace Encryption {
+using namespace Encryption;
 
-    InMemoryEncryptionRepository::InMemoryEncryptionRepository() {} // Виправлення конструктора
+InMemoryEncryptionRepository::InMemoryEncryptionRepository() 
+    : data{"", "", 0} {
+}
 
-    void InMemoryEncryptionRepository::save(const EncryptionData& data) {
-        this->data = data;
-    }
+void InMemoryEncryptionRepository::save(const Data::EncryptionData& data) {
+    this->data = data;
+}
 
-    EncryptionData InMemoryEncryptionRepository::get() {
-        return data;
-    }
-
-} // namespace Encryption
+Data::EncryptionData InMemoryEncryptionRepository::get() {
+    return data;
+}

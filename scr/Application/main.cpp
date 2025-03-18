@@ -1,5 +1,3 @@
-// scr/Application/main.cpp
-
 #include "../UI/Presenter.h"
 #include "../UI/View.h"
 #include "../Domain/UseCases/EncryptUseCase.h"
@@ -12,10 +10,11 @@ using namespace Encryption;
 int main() {
     ConsoleView view;
     InMemoryEncryptionRepository repository;
-    FileKeyProvider keyProvider;
+    FileKeyProvider keyProvider; 
     EncryptUseCase encryptUseCase(&repository, &keyProvider);
     DecryptUseCase decryptUseCase(&repository, &keyProvider);
     Presenter presenter(&view, &encryptUseCase, &decryptUseCase, &repository);
     presenter.run();
+
     return 0;
 }

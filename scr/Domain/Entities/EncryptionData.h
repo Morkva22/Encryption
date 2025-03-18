@@ -1,5 +1,3 @@
-// scr/Domain/Entities/EncryptionData.h
-
 #ifndef ENCRYPTION_DATA_H
 #define ENCRYPTION_DATA_H
 
@@ -9,10 +7,10 @@ namespace Encryption {
 
     class EncryptionData {
     public:
-        EncryptionData(string text, string key, int algorithm);
-        string getText();
-        string getKey();
-        int getAlgorithm();
+        EncryptionData(std::string text, std::string key, int algorithm);
+        string getText() const;
+        string getKey() const;
+        int getAlgorithm() const;
 
     private:
         string text;

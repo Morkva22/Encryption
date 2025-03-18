@@ -9,10 +9,10 @@ namespace Encryption {
     EncryptUseCase::EncryptUseCase(EncryptionRepository* repository, KeyProvider* keyProvider)
         : repository(repository), keyProvider(keyProvider) {}
 
-    string EncryptUseCase::execute(EncryptionData data) {
-        string key = keyProvider->getKey(data.getAlgorithm());
+    string EncryptUseCase::encrypt(const Data::EncryptionData& data) { // Заміна execute на encrypt
+        string key = keyProvider->getKey(data.algorithm);
         Cipher* cipher;
-        switch (data.getAlgorithm()) {
+        switch (data.algorithm) {
         case 1:
             cipher = new CaesarCipher();
             break;
@@ -26,7 +26,7 @@ namespace Encryption {
             return "Invalid algorithm";
         }
 
-        string encryptedText = cipher->encrypt(data.getText(), key);
+        string encryptedText = cipher->encrypt(data.text, key);
         delete cipher;
         return encryptedText;
     }

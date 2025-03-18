@@ -7,10 +7,10 @@ namespace Encryption {
     DecryptUseCase::DecryptUseCase(EncryptionRepository* repository, KeyProvider* keyProvider)
         : repository(repository), keyProvider(keyProvider) {}
 
-    string DecryptUseCase::execute(EncryptionData data) {
-        string key = keyProvider->getKey(data.getAlgorithm());
+    string DecryptUseCase::decrypt(const Data::EncryptionData& data) { // Заміна execute на decrypt
+        string key = keyProvider->getKey(data.algorithm);
         Cipher* cipher;
-        switch (data.getAlgorithm()) {
+        switch (data.algorithm) {
         case 1:
             cipher = new CaesarCipher();
             break;
@@ -24,7 +24,7 @@ namespace Encryption {
             return "Invalid algorithm";
         }
 
-        string decryptedText = cipher->decrypt(data.getText(), key);
+        string decryptedText = cipher->decrypt(data.text, key);
         delete cipher;
         return decryptedText;
     }

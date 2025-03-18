@@ -14,6 +14,6 @@ namespace Encryption {
         virtual string decrypt(const string& text, const string& key) = 0;
     };
 
-} // namespace Encryption
+}
 
 #endif

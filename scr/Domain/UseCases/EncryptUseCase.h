@@ -14,7 +14,7 @@ namespace Encryption {
     class EncryptUseCase {
     public:
         EncryptUseCase(EncryptionRepository* repository, KeyProvider* keyProvider);
-        string execute(EncryptionData data);
+        string encrypt(const  Data::EncryptionData& data); // Заміна execute на encrypt
 
     private:
         EncryptionRepository* repository;

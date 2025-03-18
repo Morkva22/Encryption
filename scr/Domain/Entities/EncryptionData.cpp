@@ -1,21 +1,18 @@
-// scr/Domain/Entities/EncryptionData.cpp
-
 #include "EncryptionData.h"
 
-namespace Encryption {
+using namespace Encryption;
 
-    EncryptionData::EncryptionData(string text, string key, int algorithm) : text(text), key(key), algorithm(algorithm) {}
+EncryptionData::EncryptionData(std::string text, std::string key, int algorithm)
+    : text(text), key(key), algorithm(algorithm) {}
 
-    string EncryptionData::getText() {
-        return text;
-    }
+std::string EncryptionData::getText() const {
+    return text;
+}
 
-    string EncryptionData::getKey() {
-        return key;
-    }
+std::string EncryptionData::getKey() const {
+    return key;
+}
 
-    int EncryptionData::getAlgorithm() {
-        return algorithm;
-    }
-
-} // namespace Encryption
+int EncryptionData::getAlgorithm() const {
+    return algorithm;
+}

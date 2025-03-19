@@ -9,6 +9,8 @@ using namespace Encryption;
 
 int main() {
     try {
+
+        
         ConsoleView view;
         InMemoryEncryptionRepository repository;
         FileKeyProvider keyProvider;

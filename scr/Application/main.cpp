@@ -8,13 +8,19 @@
 using namespace Encryption;
 
 int main() {
-    ConsoleView view;
-    InMemoryEncryptionRepository repository;
-    FileKeyProvider keyProvider; 
-    EncryptUseCase encryptUseCase(&repository, &keyProvider);
-    DecryptUseCase decryptUseCase(&repository, &keyProvider);
-    Presenter presenter(&view, &encryptUseCase, &decryptUseCase, &repository);
-    presenter.run();
+    try {
+        ConsoleView view;
+        InMemoryEncryptionRepository repository;
+        FileKeyProvider keyProvider;
+
+        EncryptUseCase encryptUseCase(&repository, &keyProvider);
+        DecryptUseCase decryptUseCase(&repository, &keyProvider);
+
+        Presenter presenter(&view, &encryptUseCase, &decryptUseCase, &repository);
+        presenter.run();
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << endl;
+    }
 
     return 0;
 }

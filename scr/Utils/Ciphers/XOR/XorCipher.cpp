@@ -1,5 +1,3 @@
-// scr/Utils/Ciphers/XOR/XorCipher.cpp
-
 #include "XorCipher.h"
 
 namespace Encryption {

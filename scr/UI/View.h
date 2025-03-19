@@ -1,5 +1,3 @@
-// scr/UI/View.h
-
 #ifndef VIEW_H
 #define VIEW_H
 

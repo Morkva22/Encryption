@@ -7,9 +7,10 @@
 #include <map>
 #include <fstream>
 #include <sstream>
+#include <stdexcept>
+#include <memory>
 #include <iomanip>
 
 using namespace std;
 
-
-#endif
+#endif // LIB_H

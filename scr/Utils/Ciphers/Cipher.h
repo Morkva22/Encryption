@@ -1,10 +1,8 @@
-// scr/Utils/Ciphers/Cipher.h
-
 #ifndef CIPHER_H
 #define CIPHER_H
 
-#include "../../Utils.h"
 #include "../../lib/lib.h"
+
 namespace Encryption {
 
     class Cipher {
@@ -14,6 +12,6 @@ namespace Encryption {
         virtual string decrypt(const string& text, const string& key) = 0;
     };
 
-}
+} // namespace Encryption
 
 #endif

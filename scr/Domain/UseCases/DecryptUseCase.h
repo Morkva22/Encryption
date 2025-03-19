@@ -1,5 +1,3 @@
-// scr/Domain/UseCases/DecryptUseCase.h
-
 #ifndef DECRYPT_USE_CASE_H
 #define DECRYPT_USE_CASE_H
 
@@ -15,7 +13,7 @@ namespace Encryption {
     class DecryptUseCase {
     public:
         DecryptUseCase(EncryptionRepository* repository, KeyProvider* keyProvider);
-        std::string decrypt(const Data::EncryptionData& data); // Заміна execute на decrypt
+        string decrypt(const Data::EncryptionData& data);
 
     private:
         EncryptionRepository* repository;

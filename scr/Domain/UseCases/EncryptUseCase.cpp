@@ -1,5 +1,3 @@
-// scr/Domain/UseCases/EncryptUseCase.cpp
-
 #include "EncryptUseCase.h"
 #include <iomanip>
 #include <sstream>
@@ -9,8 +7,8 @@ namespace Encryption {
     EncryptUseCase::EncryptUseCase(EncryptionRepository* repository, KeyProvider* keyProvider)
         : repository(repository), keyProvider(keyProvider) {}
 
-    string EncryptUseCase::encrypt(const Data::EncryptionData& data) { // Заміна execute на encrypt
-        string key = keyProvider->getKey(data.algorithm);
+    std::string EncryptUseCase::encrypt(const Data::EncryptionData& data) { // Використовуємо Data::EncryptionData
+        std::string key = keyProvider->getKey(data.algorithm);
         Cipher* cipher;
         switch (data.algorithm) {
         case 1:
@@ -26,7 +24,7 @@ namespace Encryption {
             return "Invalid algorithm";
         }
 
-        string encryptedText = cipher->encrypt(data.text, key);
+        std::string encryptedText = cipher->encrypt(data.text, key);
         delete cipher;
         return encryptedText;
     }

@@ -1,5 +1,3 @@
-// scr/Utils/Ciphers/XOR/XorCipher.h
-
 #ifndef XOR_CIPHER_H
 #define XOR_CIPHER_H
 
@@ -15,4 +13,4 @@ namespace Encryption {
 
 } // namespace Encryption
 
-#endif
+#endif  

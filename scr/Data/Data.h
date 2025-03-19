@@ -5,12 +5,14 @@
 
 namespace Encryption {
     namespace Data {
+
         struct EncryptionData {
-            string text;
-            string key;
+            std::string text;
+            std::string key;
             int algorithm;
         };
+
     } // namespace Data
 } // namespace Encryption
 
-#endif // DATA_H
+#endif

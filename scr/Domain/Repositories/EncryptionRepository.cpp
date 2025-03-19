@@ -1,15 +1,15 @@
 #include "EncryptionRepository.h"
 
-using namespace Encryption;
+namespace Encryption {
 
-InMemoryEncryptionRepository::InMemoryEncryptionRepository() 
-    : data{"", "", 0} {
-}
+    InMemoryEncryptionRepository::InMemoryEncryptionRepository() : data() {}
 
-void InMemoryEncryptionRepository::save(const Data::EncryptionData& data) {
-    this->data = data;
-}
+    void InMemoryEncryptionRepository::save(const Data::EncryptionData& data) {
+        this->data = data;
+    }
 
-Data::EncryptionData InMemoryEncryptionRepository::get() {
-    return data;
-}
+    Data::EncryptionData InMemoryEncryptionRepository::get() {
+        return data;
+    }
+
+} // namespace Encryption

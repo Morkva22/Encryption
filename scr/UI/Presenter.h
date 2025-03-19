@@ -5,6 +5,8 @@
 #include "../Domain/UseCases/EncryptUseCase.h"
 #include "../Domain/UseCases/DecryptUseCase.h"
 #include "../Domain/Repositories/EncryptionRepository.h"
+#include "../Data/Data.h"
+#include "../lib/lib.h"
 
 namespace Encryption {
 
@@ -20,6 +22,6 @@ namespace Encryption {
         EncryptionRepository* repository;
     };
 
-} 
+} // namespace Encryption
 
 #endif

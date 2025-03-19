@@ -1,7 +1,7 @@
 #ifndef ENCRYPTION_REPOSITORY_H
 #define ENCRYPTION_REPOSITORY_H
 
-#include "../../Data/Data.h"
+#include "../../Data/Data.h" // Додаємо Data.h
 
 namespace Encryption {
 
@@ -14,7 +14,7 @@ namespace Encryption {
 
     class InMemoryEncryptionRepository : public EncryptionRepository {
     public:
-        InMemoryEncryptionRepository(); // Конструктор
+        InMemoryEncryptionRepository();
         void save(const Data::EncryptionData& data) override;
         Data::EncryptionData get() override;
 
@@ -24,4 +24,4 @@ namespace Encryption {
 
 } // namespace Encryption
 
-#endif // ENCRYPTION_REPOSITORY_H
+#endif

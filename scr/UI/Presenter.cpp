@@ -1,14 +1,32 @@
 #include "Presenter.h"
-#include "../Domain/Repositories/EncryptionRepository.h"
-#include "../Data/Data.h"
 
-using namespace Encryption;
+namespace Encryption {
 
-Presenter::Presenter(View* view, EncryptUseCase* encryptUseCase, DecryptUseCase* decryptUseCase, EncryptionRepository* repository)
-    : view(view), encryptUseCase(encryptUseCase), decryptUseCase(decryptUseCase), repository(repository) {}
+    Presenter::Presenter(View* view, EncryptUseCase* encryptUseCase, DecryptUseCase* decryptUseCase, EncryptionRepository* repository)
+        : view(view), encryptUseCase(encryptUseCase), decryptUseCase(decryptUseCase), repository(repository) {}
 
-void Presenter::run() {
-    // Приклад використання правильного типу
-    Data::EncryptionData data{"some text", "some key", 1};
-    repository->save(data); // Тепер передається правильний тип
-}
+    void Presenter::run() {
+        while (true) {
+            int algorithm = view->getAlgorithm();
+            string text = view->getText();
+            string key = view->getKey();
+
+            Data::EncryptionData data;
+            data.text = text;
+            data.key = key;
+            data.algorithm = algorithm;
+
+            repository->save(data);
+
+            string encryptedText = encryptUseCase->encrypt(data);
+            string decryptedText = decryptUseCase->decrypt(data);
+
+            view->showResult(encryptedText, decryptedText);
+
+            if (!view->askToContinue()) {
+                break;
+            }
+        }
+    }
+
+} // namespace Encryption

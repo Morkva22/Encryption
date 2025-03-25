@@ -4,7 +4,6 @@
 #include "../Repositories/EncryptionRepository.h"
 #include "../../Utils/Ciphers/Caesar/CaesarCipher.h"
 #include "../../Utils/Ciphers/XOR/XorCipher.h"
-#include "../../Utils/Ciphers/AES/AesCipher.h"
 #include "../../Data/Providers/KeyProvider/KeyProvider.h"
 #include "../../Data/Data.h"
 

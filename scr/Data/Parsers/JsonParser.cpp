@@ -1,5 +1,3 @@
-// scr/Data/Parsers/JsonParser.cpp
-
 #include "JsonParser.h"
 #include <sstream>
 #include <vector>
@@ -19,7 +17,7 @@ namespace Encryption {
 
         // Перевірка на коректну кількість токенів
         if (tokens.size() < 6) {
-            throw invalid_argument("Invalid JSON format");
+            throw invalid_argument("Invalid JSON format: missing fields");
         }
 
         // Очищуємо токени від зайвих символів

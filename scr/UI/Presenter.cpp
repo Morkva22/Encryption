@@ -1,31 +1,41 @@
 #include "Presenter.h"
+#include "../Data/Data.h"
 
 namespace Encryption {
 
-    Presenter::Presenter(View* view, EncryptUseCase* encryptUseCase, DecryptUseCase* decryptUseCase, EncryptionRepository* repository)
-        : view(view), encryptUseCase(encryptUseCase), decryptUseCase(decryptUseCase), repository(repository) {}
+    Presenter::Presenter(View* view, 
+                       EncryptUseCase* encryptUseCase,
+                       DecryptUseCase* decryptUseCase,
+                       EncryptionRepository* repository)
+        : view(view),
+          encryptUseCase(encryptUseCase),
+          decryptUseCase(decryptUseCase),
+          repository(repository) {}
 
     void Presenter::run() {
-        while (true) {
-            int algorithm = view->getAlgorithm();
-            string text = view->getText();
-            string key = view->getKey();
+        try {
+            while (true) {
+                int algorithm = view->getAlgorithm();
+                std::string text = view->getText();
+                std::string key = view->getKey();
 
-            Data::EncryptionData data;
-            data.text = text;
-            data.key = key;
-            data.algorithm = algorithm;
+                EncryptionData domainData(text, key, algorithm);
+                repository->save(domainData);
 
-            repository->save(data);
+                Data::EncryptionData useCaseData;
+                useCaseData.text = domainData.getText(); // Використання геттера
+                useCaseData.key = domainData.getKey();   // Використання геттера
+                useCaseData.algorithm = domainData.getAlgorithm(); // Геттер
 
-            string encryptedText = encryptUseCase->encrypt(data);
-            string decryptedText = decryptUseCase->decrypt(data);
+                std::string encrypted = encryptUseCase->encrypt(useCaseData);
+                std::string decrypted = decryptUseCase->decrypt(useCaseData);
 
-            view->showResult(encryptedText, decryptedText);
+                view->showResult(encrypted, decrypted);
 
-            if (!view->askToContinue()) {
-                break;
+                if (!view->askToContinue()) break;
             }
+        } catch (const std::exception& e) {
+            view->showError(e.what());
         }
     }
 

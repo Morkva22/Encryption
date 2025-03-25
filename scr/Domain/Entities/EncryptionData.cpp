@@ -1,17 +1,22 @@
 #include "EncryptionData.h"
 
-using namespace Encryption;
+namespace Encryption {
 
-EncryptionData::EncryptionData(std::string text, std::string key, int algorithm) : text(text), key(key), algorithm(algorithm) {}
+    EncryptionData::EncryptionData(std::string text, std::string key, int algorithm)
+        : text(std::move(text)), 
+          key(std::move(key)), 
+          algorithm(algorithm) {}
 
-std::string EncryptionData::getText() const {
-    return text;
-}
+    std::string EncryptionData::getText() const {
+        return text;
+    }
 
-std::string EncryptionData::getKey() const {
-    return key;
-}
+    std::string EncryptionData::getKey() const {
+        return key;
+    }
 
-int EncryptionData::getAlgorithm() const {
-    return algorithm;
-}
+    int EncryptionData::getAlgorithm() const {
+        return algorithm;
+    }
+
+} // namespace Encryption

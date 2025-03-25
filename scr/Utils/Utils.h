@@ -3,8 +3,4 @@
 
 #include "../lib/lib.h"
 
-namespace Encryption {
-
-}
-
 #endif

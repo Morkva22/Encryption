@@ -1,19 +1,19 @@
-#ifndef FILE_KEY_PROVIDER_H
-#define FILE_KEY_PROVIDER_H
+#ifndef KEY_PROVIDER_H
+#define KEY_PROVIDER_H
 
 #include <string>
 
 namespace Encryption {
 
-    class FileKeyProvider {
+    class KeyProvider {
     public:
-        FileKeyProvider();
+        KeyProvider();
         std::string getKey(int algorithm);
 
     private:
-        void createKeyFileIfNotExists(const std::string& filename);
+        void createKeyFileIfNotExists(const std::string& filename, const std::string& defaultKey);
     };
 
 } // namespace Encryption
 
-#endif // FILE_KEY_PROVIDER_H
+#endif // KEY_PROVIDER_H

@@ -2,14 +2,14 @@
 
 namespace Encryption {
 
-    InMemoryEncryptionRepository::InMemoryEncryptionRepository() : data() {}
-
-    void InMemoryEncryptionRepository::save(const Data::EncryptionData& data) {
-        this->data = data;
+    InMemoryEncryptionRepository::InMemoryEncryptionRepository()
+        : data("", "", 0) {}  
+    void InMemoryEncryptionRepository::save(const EncryptionData& newData) {
+        data = newData;  
     }
 
-    Data::EncryptionData InMemoryEncryptionRepository::get() {
-        return data;
+    EncryptionData InMemoryEncryptionRepository::get() {
+        return data;  
     }
 
-} // namespace Encryption
+} 

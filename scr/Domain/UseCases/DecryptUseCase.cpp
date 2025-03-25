@@ -15,9 +15,6 @@ namespace Encryption {
         case 2:
             cipher = make_unique<XorCipher>();
             break;
-        case 3:
-            cipher = make_unique<AesCipher>();
-            break;
         default:
             return "Invalid algorithm";
         }

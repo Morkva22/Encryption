@@ -1,22 +1,22 @@
-// EncryptionData.h
 #ifndef ENCRYPTION_DATA_H
 #define ENCRYPTION_DATA_H
 
-#include "../../lib/lib.h"
-#include "../../Data/Data.h"
+#include <string>
 
 namespace Encryption {
 
     class EncryptionData {
     public:
-        EncryptionData(string text, string key, int algorithm);
-        string getText() const;
-        string getKey() const;
-        int getAlgorithm() const; // Додано публічний метод
+        EncryptionData(std::string text, std::string key, int algorithm);
+    
+        // Геттери повертаються!
+        std::string getText() const;
+        std::string getKey() const;
+        int getAlgorithm() const;
 
     private:
-        string text;
-        string key;
+        std::string text;
+        std::string key;
         int algorithm;
     };
 

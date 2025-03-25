@@ -312,13 +312,8 @@
     <ClCompile Include="scr\Infrastructure\Localization\Localization.cpp" />
     <ClCompile Include="scr\UI\Presenter.cpp" />
     <ClCompile Include="scr\UI\View.cpp" />
-    <ClCompile Include="scr\Utils\Ciphers\AES\AesCipher.cpp" />
     <ClCompile Include="scr\Utils\Ciphers\Caesar\CaesarCipher.cpp" />
     <ClCompile Include="scr\Utils\Ciphers\XOR\XorCipher.cpp" />
-    <ClCompile Include="test\Integration\Integration.cpp" />
-    <ClCompile Include="test\Unit\Ciphers\Ciphers.cpp" />
-    <ClCompile Include="test\Unit\Repository\Repositories.cpp" />
-    <ClCompile Include="test\Unit\UseCases\UseCases.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scr\Data\Data.h" />
@@ -341,7 +336,6 @@
     <ClInclude Include="scr\lib\lib.h" />
     <ClInclude Include="scr\UI\Presenter.h" />
     <ClInclude Include="scr\UI\View.h" />
-    <ClInclude Include="scr\Utils\Ciphers\AES\AesCipher.h" />
     <ClInclude Include="scr\Utils\Ciphers\Caesar\CaesarCipher.h" />
     <ClInclude Include="scr\Utils\Ciphers\Cipher.h" />
     <ClInclude Include="scr\Utils\Ciphers\XOR\XorCipher.h" />

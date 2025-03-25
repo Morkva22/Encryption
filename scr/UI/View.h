@@ -1,29 +1,31 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#include "../lib/lib.h"
+#include <string>
 
 namespace Encryption {
 
     class View {
     public:
         virtual ~View() = default;
-        virtual string getText() = 0;
-        virtual string getKey() = 0;
+        virtual std::string getText() = 0;
+        virtual std::string getKey() = 0;
         virtual int getAlgorithm() = 0;
-        virtual void showResult(const string& encryptedResult, const string& decryptedResult) = 0;
+        virtual void showResult(const std::string& encryptedResult, const std::string& decryptedResult) = 0;
         virtual bool askToContinue() = 0;
+        virtual void showError(const std::string& errorMessage) = 0; // Новий метод для виведення помилок
     };
 
     class ConsoleView : public View {
     public:
-        string getText() override;
-        string getKey() override;
+        std::string getText() override;
+        std::string getKey() override;
         int getAlgorithm() override;
-        void showResult(const string& encryptedResult, const string& decryptedResult) override;
+        void showResult(const std::string& encryptedResult, const std::string& decryptedResult) override;
         bool askToContinue() override;
+        void showError(const std::string& errorMessage) override; // Реалізація для ConsoleView
     };
 
 } // namespace Encryption
 
-#endif
+#endif // VIEW_H

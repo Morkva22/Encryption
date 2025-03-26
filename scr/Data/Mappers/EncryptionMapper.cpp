@@ -1,18 +1,26 @@
-// scr/Data/Mappers/EncryptionMapper.cpp
-
 #include "EncryptionMapper.h"
 
-using namespace Encryption;
+std::string EncryptionMapper::toStorageFormat(const EncryptionData& data) {
+    std::ostringstream oss;
+    oss << data.text << "|"
+        << data.encryptedText << "|"
+        << data.key << "|"
+        << data.cipherType;
+    return oss.str();
+}
 
-    EncryptionData EncryptionMapper::mapToDomain(const Data::EncryptionData& data) {
-        return EncryptionData(data.text, data.key, data.algorithm);
-    }
-
-    Data::EncryptionData EncryptionMapper::mapToData(const EncryptionData& data) {
-        Data::EncryptionData result;
-        result.text = data.getText();
-        result.key = data.getKey();
-        result.algorithm = data.getAlgorithm();
-        return result;
-
+EncryptionData EncryptionMapper::fromStorageFormat(const std::string& storageString) {
+    istringstream iss(storageString);
+    EncryptionData data;
+    string token;
+    
+    getline(iss, data.text, '|');
+    getline(iss, data.encryptedText, '|');
+    
+    getline(iss, token, '|');
+    data.key = std::stoi(token);
+    
+    getline(iss, data.cipherType, '|');
+    
+    return data;
 }

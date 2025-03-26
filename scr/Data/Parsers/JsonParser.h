@@ -1,19 +1,16 @@
-// scr/Data/Parsers/JsonParser.h
-
 #ifndef JSON_PARSER_H
 #define JSON_PARSER_H
 
-#include "ParserInterface.h"
 #include "../../lib/lib.h"
 
-namespace Encryption {
+class JsonParser {
+public:
+    std::unordered_map<std::string, std::string> parse(const std::string& json);
+    
+private:
+    void skipWhitespace(const std::string& json, size_t& pos);
+    std::string parseString(const std::string& json, size_t& pos);
+    std::string parseValue(const std::string& json, size_t& pos);
+};
 
-    class JsonParser : public ParserInterface {
-    public:
-        Data::EncryptionData parse(const string& data) override;
-        string serialize(const Data::EncryptionData& data) override;
-    };
-
-} // namespace Encryption
-
-#endif
+#endif // JSON_PARSER_H

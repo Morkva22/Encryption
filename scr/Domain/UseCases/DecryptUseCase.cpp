@@ -1,25 +1,13 @@
 #include "DecryptUseCase.h"
 
-namespace Encryption {
+void DecryptUseCase::registerCipher(const std::string& name, std::shared_ptr<Cipher> cipher) {
+    ciphers[name] = cipher;
+}
 
-    DecryptUseCase::DecryptUseCase(EncryptionRepository* repository, KeyProvider* keyProvider)
-        : repository(repository), keyProvider(keyProvider) {}
-
-    string DecryptUseCase::decrypt(const Data::EncryptionData& data) {
-        string key = keyProvider->getKey(data.algorithm);
-        unique_ptr<Cipher> cipher;
-        switch (data.algorithm) {
-        case 1:
-            cipher = make_unique<CaesarCipher>();
-            break;
-        case 2:
-            cipher = make_unique<XorCipher>();
-            break;
-        default:
-            return "Invalid algorithm";
-        }
-
-        return cipher->decrypt(data.text, key);
+std::string DecryptUseCase::execute(const EncryptionData& data) {
+    auto it = ciphers.find(data.cipherType);
+    if (it != ciphers.end()) {
+        return it->second->decrypt(data.encryptedText, std::to_string(data.key));
     }
-
-} // namespace EncryptionDecryptUseCase.cpp
+    throw std::runtime_error("Unsupported cipher type: " + data.cipherType);
+}

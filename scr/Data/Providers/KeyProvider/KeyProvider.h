@@ -1,19 +1,16 @@
 #ifndef KEY_PROVIDER_H
 #define KEY_PROVIDER_H
 
-#include <string>
+#include "../../../lib/lib.h"
 
-namespace Encryption {
+class KeyProvider {
+public:
+    explicit KeyProvider(const std::string& filename);
+    void saveKey(const std::string& cipherName, int key);
+    int loadKey(const std::string& cipherName);
 
-    class KeyProvider {
-    public:
-        KeyProvider();
-        std::string getKey(int algorithm);
-
-    private:
-        void createKeyFileIfNotExists(const std::string& filename, const std::string& defaultKey);
-    };
-
-} // namespace Encryption
+private:
+    std::string filename;
+};
 
 #endif // KEY_PROVIDER_H

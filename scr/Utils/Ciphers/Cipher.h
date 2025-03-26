@@ -3,15 +3,11 @@
 
 #include "../../lib/lib.h"
 
-namespace Encryption {
+class Cipher {
+public:
+    virtual ~Cipher() = default;
+    virtual string encrypt(const string& text, const string& key) = 0;
+    virtual string decrypt(const string& text, const string& key) = 0;
+};
 
-    class Cipher {
-    public:
-        virtual ~Cipher() = default;
-        virtual string encrypt(const string& text, const string& key) = 0;
-        virtual string decrypt(const string& text, const string& key) = 0;
-    };
-
-} // namespace Encryption
-
-#endif
+#endif // CIPHER_H

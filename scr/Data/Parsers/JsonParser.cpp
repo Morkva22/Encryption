@@ -1,43 +1,121 @@
 #include "JsonParser.h"
-#include <sstream>
-#include <vector>
 
-namespace Encryption {
-
-    Data::EncryptionData JsonParser::parse(const string& data) {
-        Data::EncryptionData result;
-        stringstream ss(data);
-        string token;
-        vector<string> tokens;
-
-        // Розбиваємо рядок на токени
-        while (getline(ss, token, ',')) {
-            tokens.push_back(token);
-        }
-
-        // Перевірка на коректну кількість токенів
-        if (tokens.size() < 6) {
-            throw invalid_argument("Invalid JSON format: missing fields");
-        }
-
-        // Очищуємо токени від зайвих символів
-        for (string& token : tokens) {
-            token.erase(remove(token.begin(), token.end(), '{'), token.end());
-            token.erase(remove(token.begin(), token.end(), '}'), token.end());
-            token.erase(remove(token.begin(), token.end(), '"'), token.end());
-            token.erase(remove(token.begin(), token.end(), ':'), token.end());
-        }
-
-        // Заповнюємо результат
-        result.text = tokens[1];
-        result.key = tokens[3];
-        result.algorithm = stoi(tokens[5]);
-
-        return result;
+namespace {
+    void throwParseError(const std::string& message, size_t pos) {
+        throw std::runtime_error("JSON parse error at position " + 
+                               std::to_string(pos) + ": " + message);
     }
+}
 
-    string JsonParser::serialize(const Data::EncryptionData& data) {
-        return "{\"text\":\"" + data.text + "\",\"key\":\"" + data.key + "\",\"algorithm\":" + to_string(data.algorithm) + "}";
+void JsonParser::skipWhitespace(const std::string& json, size_t& pos) {
+    while (pos < json.size() && isspace(json[pos])) {
+        pos++;
     }
+}
 
-} // namespace Encryption
+std::string JsonParser::parseString(const std::string& json, size_t& pos) {
+    if (json[pos] != '"') {
+        throwParseError("Expected '\"'", pos);
+    }
+    pos++;
+    
+    std::string result;
+    while (pos < json.size() && json[pos] != '"') {
+        if (json[pos] == '\\') {
+            pos++;
+            if (pos >= json.size()) {
+                throwParseError("Unterminated escape sequence", pos);
+            }
+            // Проста обробка escape-послідовностей
+            switch (json[pos]) {
+                case '"': result += '"'; break;
+                case '\\': result += '\\'; break;
+                default: result += json[pos]; break;
+            }
+        } else {
+            result += json[pos];
+        }
+        pos++;
+    }
+    
+    if (pos >= json.size() || json[pos] != '"') {
+        throwParseError("Unterminated string", pos);
+    }
+    pos++;
+    
+    return result;
+}
+
+std::string JsonParser::parseValue(const std::string& json, size_t& pos) {
+    skipWhitespace(json, pos);
+    if (pos >= json.size()) {
+        throwParseError("Unexpected end of input", pos);
+    }
+    
+    if (json[pos] == '"') {
+        return parseString(json, pos);
+    }
+    
+    // Проста обробка boolean та null значень
+    if (json.substr(pos, 4) == "true") {
+        pos += 4;
+        return "true";
+    }
+    if (json.substr(pos, 5) == "false") {
+        pos += 5;
+        return "false";
+    }
+    if (json.substr(pos, 4) == "null") {
+        pos += 4;
+        return "null";
+    }
+    
+    // Обробка чисел (спрощено)
+    std::string number;
+    while (pos < json.size() && (isdigit(json[pos]) || json[pos] == '.' || json[pos] == '-')) {
+        number += json[pos++];
+    }
+    if (!number.empty()) {
+        return number;
+    }
+    
+    throwParseError("Unexpected token", pos);
+    return "";
+}
+
+std::unordered_map<std::string, std::string> JsonParser::parse(const std::string& json) {
+    std::unordered_map<std::string, std::string> result;
+    size_t pos = 0;
+    
+    skipWhitespace(json, pos);
+    if (pos >= json.size() || json[pos] != '{') {
+        throwParseError("Expected '{'", pos);
+    }
+    pos++;
+    
+    while (pos < json.size()) {
+        skipWhitespace(json, pos);
+        if (json[pos] == '}') {
+            pos++;
+            break;
+        }
+        
+        std::string key = parseString(json, pos);
+        skipWhitespace(json, pos);
+        
+        if (pos >= json.size() || json[pos] != ':') {
+            throwParseError("Expected ':'", pos);
+        }
+        pos++;
+        
+        std::string value = parseValue(json, pos);
+        result[key] = value;
+        
+        skipWhitespace(json, pos);
+        if (pos < json.size() && json[pos] == ',') {
+            pos++;
+        }
+    }
+    
+    return result;
+}

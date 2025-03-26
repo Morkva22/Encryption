@@ -1,26 +1,30 @@
-
 #include "FileSystemProvider.h"
 
-using namespace Encryption;
+using namespace std;
 
-class ConcreteFileSystemProvider : public FileSystemProvider {
+class FileSystemProviderImpl : public FileSystemProvider {
+private:
+    string encryptionFileName = "encryption_results.txt";
+    string decryptionFileName = "decryption_results.txt";
+
 public:
-    string readFile(const string& filename) override {
-        ifstream file(filename);
+    void saveEncryptionResult(const string& encryptedText) override {
+        ofstream file(encryptionFileName, ios::app);  // Відкриваємо файл для додавання результатів
         if (file.is_open()) {
-            string content((istreambuf_iterator<char>(file)),
-                             (istreambuf_iterator<char>()));
+            file << "Encrypted: " << encryptedText << endl;
             file.close();
-            return content;
+        } else {
+            cout << "Unable to open file for encryption result." << endl;
         }
-        return "";
     }
 
-    void writeFile(const string& filename, const string& content) override {
-        ofstream file(filename);
+    void saveDecryptionResult(const string& decryptedText) override {
+        ofstream file(decryptionFileName, ios::app);  // Відкриваємо файл для додавання результатів
         if (file.is_open()) {
-            file << content;
+            file << "Decrypted: " << decryptedText << endl;
             file.close();
+        } else {
+            cout << "Unable to open file for decryption result." << endl;
         }
     }
 };

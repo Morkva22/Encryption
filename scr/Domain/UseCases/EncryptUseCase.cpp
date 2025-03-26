@@ -1,27 +1,13 @@
 #include "EncryptUseCase.h"
-#include <memory> // Для std::unique_ptr
 
-namespace Encryption {
+void EncryptUseCase::registerCipher(const std::string& name, std::shared_ptr<Cipher> cipher) {
+    ciphers[name] = cipher;
+}
 
-    EncryptUseCase::EncryptUseCase(EncryptionRepository* repository, KeyProvider* keyProvider)
-        : repository(repository), keyProvider(keyProvider) {}
-
-    std::string EncryptUseCase::encrypt(const Data::EncryptionData& data) {
-        std::string key = keyProvider->getKey(data.algorithm);
-        std::unique_ptr<Cipher> cipher;
-
-        switch (data.algorithm) {
-        case 1:
-            cipher = std::make_unique<CaesarCipher>();
-            break;
-        case 2:
-            cipher = std::make_unique<XorCipher>();
-            break;
-        default:
-            return "Invalid algorithm";
-        }
-
-        return cipher->encrypt(data.text, key);
+std::string EncryptUseCase::execute(const EncryptionData& data) {
+    auto it = ciphers.find(data.cipherType);
+    if (it != ciphers.end()) {
+        return it->second->encrypt(data.text, std::to_string(data.key));
     }
-
-} // namespace Encryption
+    throw std::runtime_error("Unsupported cipher type: " + data.cipherType);
+}

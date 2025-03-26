@@ -2,15 +2,16 @@
 #define CAESAR_CIPHER_H
 
 #include "../Cipher.h"
+#include "../../..//lib/lib.h"
 
-namespace Encryption {
+class CaesarCipher : public Cipher {
+public:
+    std::string encrypt(const std::string& text, const std::string& key) override;
+    std::string decrypt(const std::string& text, const std::string& key) override;
+    
+private:
+    int parseKey(const std::string& key) const;
+    char shiftChar(char c, int shift) const;
+};
 
-    class CaesarCipher : public Cipher {
-    public:
-        string encrypt(const string& text, const string& key) override;
-        string decrypt(const string& text, const string& key) override;
-    };
-
-} // namespace Encryption
-
-#endif
+#endif // CAESAR_CIPHER_H

@@ -1,19 +1,12 @@
-// scr/Data/Parsers/ParserInterface.h
-
 #ifndef PARSER_INTERFACE_H
 #define PARSER_INTERFACE_H
 
-#include "../Data.h"
+#include "../../lib/lib.h"
+class ParserInterface {
+public:
+    virtual ~ParserInterface() = default;
+    virtual std::string serialize(const class EncryptionData& data) = 0;
+    virtual class EncryptionData deserialize(const std::string& serialized) = 0;
+};
 
-namespace Encryption {
-
-    class ParserInterface {
-    public:
-        virtual ~ParserInterface() = default;
-        virtual Data::EncryptionData parse(const string& data) = 0;
-        virtual string serialize(const Data::EncryptionData& data) = 0;
-    };
-
-} // namespace Encryption
-
-#endif
+#endif // PARSER_INTERFACE_H

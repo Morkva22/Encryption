@@ -1,24 +1,17 @@
 #ifndef DECRYPT_USE_CASE_H
 #define DECRYPT_USE_CASE_H
 
-#include "../Repositories/EncryptionRepository.h"
-#include "../../Utils/Ciphers/Caesar/CaesarCipher.h"
-#include "../../Utils/Ciphers/XOR/XorCipher.h"
-#include "../../Data/Providers/KeyProvider/KeyProvider.h"
-#include "../../Data/Data.h"
+#include "../Entities/EncryptionData.h"
+#include "../../Utils/Ciphers/Cipher.h"
+#include "../../lib/lib.h"
 
-namespace Encryption {
+class DecryptUseCase {
+public:
+    void registerCipher(const std::string& name, std::shared_ptr<Cipher> cipher);
+    std::string execute(const EncryptionData& data);
 
-    class DecryptUseCase {
-    public:
-        DecryptUseCase(EncryptionRepository* repository, KeyProvider* keyProvider);
-        string decrypt(const Data::EncryptionData& data);
+private:
+    std::map<std::string, std::shared_ptr<Cipher>> ciphers;
+};
 
-    private:
-        EncryptionRepository* repository;
-        KeyProvider* keyProvider;
-    };
-
-} // namespace Encryption
-
-#endif
+#endif // DECRYPT_USE_CASE_H

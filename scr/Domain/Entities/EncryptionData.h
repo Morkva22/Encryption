@@ -1,25 +1,19 @@
 #ifndef ENCRYPTION_DATA_H
 #define ENCRYPTION_DATA_H
 
-#include <string>
+#include "../../lib/lib.h"
 
-namespace Encryption {
+struct EncryptionData {
+    std::string text;
+    std::string encryptedText;
+    int key;
+    std::string cipherType;
 
-    class EncryptionData {
-    public:
-        EncryptionData(std::string text, std::string key, int algorithm);
-    
-        // Геттери повертаються!
-        std::string getText() const;
-        std::string getKey() const;
-        int getAlgorithm() const;
+    EncryptionData(const std::string& txt = "", 
+                  int k = 0, 
+                  const std::string& encTxt = "", 
+                  const std::string& cipher = "")
+        : text(txt), key(k), encryptedText(encTxt), cipherType(cipher) {}
+};
 
-    private:
-        std::string text;
-        std::string key;
-        int algorithm;
-    };
-
-} // namespace Encryption
-
-#endif
+#endif // ENCRYPTION_DATA_H

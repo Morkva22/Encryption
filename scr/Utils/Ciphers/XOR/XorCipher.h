@@ -2,15 +2,15 @@
 #define XOR_CIPHER_H
 
 #include "../Cipher.h"
+#include "../../../lib/lib.h"
+class XorCipher : public Cipher {
+public:
+    std::string encrypt(const std::string& text, const std::string& key) override;
+    std::string decrypt(const std::string& text, const std::string& key) override;
+    
+private:
+    void validateKey(const std::string& key) const;
+    std::string process(const std::string& text, const std::string& key) const;
+};
 
-namespace Encryption {
-
-    class XorCipher : public Cipher {
-    public:
-        string encrypt(const string& text, const string& key) override;
-        string decrypt(const string& text, const string& key) override;
-    };
-
-} // namespace Encryption
-
-#endif  
+#endif // XOR_CIPHER_H

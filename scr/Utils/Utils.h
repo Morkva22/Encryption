@@ -1,6 +1,11 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "../lib/lib.h"
+// Базовий інтерфейс шифрування
+#include "Ciphers/Cipher.h"
 
-#endif
+// Конкретні реалізації шифрів
+#include "Ciphers/Caesar/CaesarCipher.h"
+#include "Ciphers/XOR/XorCipher.h"
+
+#endif // UTILS_H

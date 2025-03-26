@@ -1,0 +1,9 @@
+{
+  "ui": {
+    "language": "uk",
+    "colors": true
+  },
+  "encryption": {
+    "key_autosave": false
+  }
+}

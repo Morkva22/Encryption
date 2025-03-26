@@ -1,23 +1,14 @@
-// scr/Domain/domain.h
-
 #ifndef DOMAIN_H
 #define DOMAIN_H
 
-#include "../lib/lib.h"
+// Основні сутності
+#include "Entities/EncryptionData.h"
 
-namespace Encryption {
+// Репозиторії
+#include "Repositories/EncryptionRepository.h"
 
-    // Основні сутності
-    class EncryptionData; // Оголошення класу EncryptionData
+// Юзкейси
+#include "UseCases/EncryptUseCase.h"
+#include "UseCases/DecryptUseCase.h"
 
-    // Репозиторії
-    class EncryptionRepository; // Оголошення інтерфейсу репозиторію
-    class InMemoryEncryptionRepository; // Оголошення конкретної реалізації репозиторію
-
-    // Use Cases
-    class EncryptUseCase; // Оголошення Use Case для шифрування
-    class DecryptUseCase; // Оголошення Use Case для дешифрування
-
-} // namespace Encryption
-
-#endif
+#endif // DOMAIN_H

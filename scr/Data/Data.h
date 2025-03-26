@@ -1,18 +1,13 @@
 #ifndef DATA_H
 #define DATA_H
 
-#include "../lib/lib.h"
+// Парсери
+#include "Parsers/JsonParser.h"
 
-namespace Encryption {
-    namespace Data {
+// Мапери
+#include "Mappers/EncryptionMapper.h"
 
-        struct EncryptionData {
-            std::string text;
-            std::string key;
-            int algorithm;
-        };
+// Провайдери
+#include "Providers/KeyProvider.h"
 
-    } // namespace Data
-} // namespace Encryption
-
-#endif
+#endif // DATA_H

@@ -10,7 +10,11 @@
 #include <stdexcept>
 #include <memory>
 #include <iomanip>
+#include <fstream>
+#include <stdexcept>
+#include <algorithm>
+#include <limits>
+#include <unordered_map>
 
 using namespace std;
-
-#endif // LIB_H
+#endif

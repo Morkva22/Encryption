@@ -2,26 +2,17 @@
 #define ENCRYPTION_REPOSITORY_H
 
 #include "../Entities/EncryptionData.h"
+#include "../../lib/lib.h"
 
-namespace Encryption {
+class EncryptionRepository {
+public:
+    explicit EncryptionRepository(const std::string& filename);
+    void save(const EncryptionData& data) const;
+    std::vector<EncryptionData> loadAll() const;
 
-    class EncryptionRepository {
-    public:
-        virtual ~EncryptionRepository() = default;
-        virtual void save(const EncryptionData& newData) = 0; 
-        virtual EncryptionData get() = 0;
-    };
+private:
+    std::string filename;
+    void ensureFileExists() const;
+};
 
-    class InMemoryEncryptionRepository : public EncryptionRepository {
-    public:
-        InMemoryEncryptionRepository();  
-        void save(const EncryptionData& newData) override; 
-        EncryptionData get() override;
-
-    private:
-        EncryptionData data;
-    };
-
-} 
-
-#endif
+#endif // ENCRYPTION_REPOSITORY_H

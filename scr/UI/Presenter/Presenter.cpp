@@ -1,14 +1,15 @@
 #include "Presenter.h"
+#include "../../Domain/Entities/EncryptionDocument.h"
 
 Presenter::Presenter(
     std::unique_ptr<EncryptUseCase> encryptor,
     std::unique_ptr<DecryptUseCase> decryptor,
-    std::unique_ptr<EncryptionRepository> repo,
+    std::unique_ptr<Repository> repository,
     std::unique_ptr<View> view,
     ConfigInterface& config
 ) : encryptUseCase(std::move(encryptor)),
     decryptUseCase(std::move(decryptor)),
-    repository(std::move(repo)),
+    repository(std::move(repository)),
     view(std::move(view)),
     config(config) {}
 
@@ -35,18 +36,18 @@ void Presenter::handleEncryption() {
     auto key = view->getEncryptionKey();
     auto cipherType = view->getCipherType();
     
-    EncryptionData data{text, key, "", cipherType};
-    data.encryptedText = encryptUseCase->execute(data);
-    repository->save(data);
-    view->showResult(data.encryptedText);
+    std::string encryptedText = encryptUseCase->execute(text, cipherType, key);
+    EncryptedDocument doc(text, cipherType, key, encryptedText);
+    
+    repository->save(doc);
+    view->showResult(encryptedText);
 }
 
 void Presenter::handleDecryption() {
-    auto text = view->getInputText();
+    auto encryptedText = view->getInputText();
     auto key = view->getEncryptionKey();
     auto cipherType = view->getCipherType();
     
-    EncryptionData data{"", key, text, cipherType};
-    data.text = decryptUseCase->execute(data);
-    view->showResult(data.text);
+    std::string decryptedText = decryptUseCase->execute(encryptedText, cipherType, key);
+    view->showResult(decryptedText);
 }

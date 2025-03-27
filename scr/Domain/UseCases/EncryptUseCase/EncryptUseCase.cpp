@@ -1,13 +1,18 @@
-#include "EncryptUseCase.h"
+#ifndef DECRYPT_USE_CASE_H
+#define DECRYPT_USE_CASE_H
 
-void EncryptUseCase::registerCipher(const std::string& name, std::shared_ptr<Cipher> cipher) {
-    ciphers[name] = cipher;
-}
+#include <string>
+#include <memory>
+#include <map>
+#include "../../../Utils/Ciphers/Cipher.h"
 
-std::string EncryptUseCase::execute(const EncryptionData& data) {
-    auto it = ciphers.find(data.cipherType);
-    if (it != ciphers.end()) {
-        return it->second->encrypt(data.text, std::to_string(data.key));
-    }
-    throw std::runtime_error("Unsupported cipher type: " + data.cipherType);
-}
+class DecryptUseCase {
+public:
+    void registerCipher(const std::string& name, std::shared_ptr<Cipher> cipher);
+    std::string execute(const std::string& encryptedText, const std::string& cipherType, int key);
+
+private:
+    std::map<std::string, std::shared_ptr<Cipher>> ciphers;
+};
+
+#endif // DECRYPT_USE_CASE_H

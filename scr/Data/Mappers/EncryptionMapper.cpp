@@ -1,26 +1,41 @@
 #include "EncryptionMapper.h"
+#include <sstream>
 
-std::string EncryptionMapper::toStorageFormat(const EncryptionData& data) {
+EncryptionData EncryptionMapper::toDTO(const EncryptedDocument& doc) {
+    return {
+        doc.getOriginalText(),
+        doc.getEncryptedText(),
+        doc.getKey(),
+        doc.getCipherType()
+    };
+}
+
+EncryptedDocument EncryptionMapper::toDomain(const EncryptionData& dto) {
+    return EncryptedDocument(
+        dto.text,
+        dto.cipherType,
+        dto.key,
+        dto.encryptedText
+    );
+}
+
+std::string EncryptionMapper::toStorageString(const EncryptionData& dto) {
     std::ostringstream oss;
-    oss << data.text << "|"
-        << data.encryptedText << "|"
-        << data.key << "|"
-        << data.cipherType;
+    oss << dto.text << "|" << dto.encryptedText << "|" 
+        << dto.key << "|" << dto.cipherType;
     return oss.str();
 }
 
-EncryptionData EncryptionMapper::fromStorageFormat(const std::string& storageString) {
-    istringstream iss(storageString);
-    EncryptionData data;
-    string token;
-    
-    getline(iss, data.text, '|');
-    getline(iss, data.encryptedText, '|');
-    
-    getline(iss, token, '|');
-    data.key = std::stoi(token);
-    
-    getline(iss, data.cipherType, '|');
-    
-    return data;
+EncryptionData EncryptionMapper::fromStorageString(const std::string& raw) {
+    std::istringstream iss(raw);
+    EncryptionData dto;
+    std::string token;
+
+    std::getline(iss, dto.text, '|');
+    std::getline(iss, dto.encryptedText, '|');
+    std::getline(iss, token, '|');
+    dto.key = std::stoi(token);
+    std::getline(iss, dto.cipherType, '|');
+
+    return dto;
 }

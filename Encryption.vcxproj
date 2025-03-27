@@ -230,7 +230,8 @@
     </ClCompile>
     <ClCompile Include="scr\Data\Mappers\EncryptionMapper.cpp" />
     <ClCompile Include="scr\Data\Parsers\JsonParser.cpp" />
-    <ClCompile Include="scr\Data\Providers\FileProvider\FileSystemProvider.cpp">
+    <ClCompile Include="scr\Data\Providers\KeyProvider\KeyProvider.cpp" />
+    <ClCompile Include="scr\Domain\UseCases\DecryptUseCase\DecryptUseCase.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <Optimization>Disabled</Optimization>
@@ -304,9 +305,81 @@
       <SDLCheck>true</SDLCheck>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
-    <ClCompile Include="scr\Data\Providers\KeyProvider\KeyProvider.cpp" />
-    <ClCompile Include="scr\Domain\UseCases\DecryptUseCase.cpp" />
-    <ClCompile Include="scr\Domain\UseCases\EncryptUseCase.cpp" />
+    <ClCompile Include="scr\Domain\UseCases\EncryptUseCase\EncryptUseCase.cpp">
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <Optimization>Disabled</Optimization>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AssemblerListingLocation>Encryption\x64\Debug\</AssemblerListingLocation>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+      <BrowseInformation>false</BrowseInformation>
+      <BrowseInformationFile>Encryption\x64\Debug\</BrowseInformationFile>
+      <CompileAs>Default</CompileAs>
+      <ConformanceMode>true</ConformanceMode>
+      <DiagnosticsFormat>Column</DiagnosticsFormat>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <ErrorReporting>Prompt</ErrorReporting>
+      <ExpandAttributedSource>false</ExpandAttributedSource>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableASAN>false</EnableASAN>
+      <EnableFuzzer>false</EnableFuzzer>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <GenerateModuleDependencies>false</GenerateModuleDependencies>
+      <GenerateSourceDependencies>false</GenerateSourceDependencies>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <LanguageStandard>Default</LanguageStandard>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ModuleDependenciesFile>Encryption\x64\Debug\</ModuleDependenciesFile>
+      <ModuleOutputFile>Encryption\x64\Debug\</ModuleOutputFile>
+      <OmitDefaultLibName>false</OmitDefaultLibName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <ObjectFileName>Encryption\x64\Debug\</ObjectFileName>
+      <CallingConvention>Cdecl</CallingConvention>
+      <ProgramDataBaseFileName>Encryption\x64\Debug\vc143.pdb</ProgramDataBaseFileName>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>Encryption\x64\Debug\Encryption.pch</PrecompiledHeaderOutputFile>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessKeepComments>false</PreprocessKeepComments>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <ShowIncludes>false</ShowIncludes>
+      <SourceDependenciesFile>Encryption\x64\Debug\</SourceDependenciesFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <SpectreMitigation>false</SpectreMitigation>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <TrackerLogDirectory>Encryption\x64\Debug\Encryption.tlog\</TrackerLogDirectory>
+      <TranslateIncludes>false</TranslateIncludes>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <UseFullPaths>true</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <XMLDocumentationFileName>Encryption\x64\Debug\</XMLDocumentationFileName>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <IntelJCCErratum>false</IntelJCCErratum>
+      <BuildStlModules>false</BuildStlModules>
+      <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
+      <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
+      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+      <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <LinkCompiled>true</LinkCompiled>
+    </ClCompile>
+    <ClCompile Include="scr\Infrastructure\Adapters\FileStorageAdapter.cpp" />
     <ClCompile Include="scr\Infrastructure\Config\Config.cpp" />
     <ClCompile Include="scr\Infrastructure\Localization\Localization.cpp" />
     <ClCompile Include="scr\UI\PresenterFactory\PresenterFactory.cpp" />
@@ -460,21 +533,19 @@
     </ClCompile>
     <ClCompile Include="scr\Utils\Ciphers\Caesar\CaesarCipher.cpp" />
     <ClCompile Include="scr\Utils\Ciphers\XOR\XorCipher.cpp" />
-    <ClCompile Include="Tests\JsonTests\JsonTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scr\Data\Data.h" />
+    <ClInclude Include="scr\Data\DTO\EncryptionData.h" />
     <ClInclude Include="scr\Data\Mappers\EncryptionMapper.h" />
     <ClInclude Include="scr\Data\Parsers\JsonParser.h" />
     <ClInclude Include="scr\Data\Parsers\ParserInterface.h" />
-    <ClInclude Include="scr\Data\Providers\FileProvider\FileSystemProvider.h" />
     <ClInclude Include="scr\Data\Providers\KeyProvider\KeyProvider.h" />
     <ClInclude Include="scr\Domain\Domain.h" />
-    <ClInclude Include="scr\Domain\Entities\EncryptionData.h" />
-    <ClInclude Include="scr\Domain\Repositories\EncryptionRepository.h" />
-    <ClInclude Include="scr\Domain\Repositories\EncryptionRepository.cpp" />
-    <ClInclude Include="scr\Domain\UseCases\DecryptUseCase.h" />
-    <ClInclude Include="scr\Domain\UseCases\EncryptUseCase.h" />
+    <ClInclude Include="scr\Domain\Entities\EncryptionDocument.h" />
+    <ClInclude Include="scr\Domain\UseCases\DecryptUseCase\DecryptUseCase.h" />
+    <ClInclude Include="scr\Domain\UseCases\EncryptUseCase\EncryptUseCase.h" />
+    <ClInclude Include="scr\Infrastructure\Adapters\FileStorageAdapter.h" />
     <ClInclude Include="scr\Infrastructure\Config\Config.h" />
     <ClInclude Include="scr\Infrastructure\Config\ConfigInterface.h" />
     <ClInclude Include="scr\Infrastructure\Infrastructure.h" />
@@ -491,6 +562,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.json" />
+    <Content Include="scr\Domain\Repositories\Repository.h" />
     <Content Include="scr\Infrastructure\Localization\locales\en.json" />
     <Content Include="scr\Infrastructure\Localization\locales\ru.json" />
     <Content Include="scr\Infrastructure\Localization\locales\uk.json" />

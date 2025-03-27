@@ -1,12 +1,16 @@
-#ifndef ENCRYPTION_MAPPER_H
-#define ENCRYPTION_MAPPER_H
+#ifndef _ENCRYPTIONMAPPER_H
+#define _ENCRYPTIONMAPPER_H
 
-#include "../../Domain/Entities/EncryptionData.h"
+#include "../DTO/EncryptionData.h"
+#include "../../Domain/Entities/EncryptionDocument.h"
 #include "../../lib/lib.h"
+
 class EncryptionMapper {
 public:
-    static std::string toStorageFormat(const EncryptionData& data);
-    static EncryptionData fromStorageFormat(const std::string& storageString);
+    static EncryptionData toDTO(const EncryptedDocument& document);
+    static EncryptedDocument toDomain(const EncryptionData& dto);
+    static std::string toStorageString(const EncryptionData& dto);
+    static EncryptionData fromStorageString(const std::string& raw);
 };
 
-#endif // ENCRYPTION_MAPPER_H
+#endif // _ENCRYPTIONMAPPER_H

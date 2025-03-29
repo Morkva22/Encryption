@@ -1,18 +1,14 @@
 #include "Localization.h"
+#include "../../Data/Parsers/JsonParser.h"
 #include <fstream>
-#include <algorithm>
+#include <sstream>
 
-Localization::Localization(const std::string& defaultLanguage) {
+Localization::Localization(const std::string& defaultLanguage) : parser() {
     setLanguage(defaultLanguage);
 }
 
-void Localization::setLanguage(const std::string& language) {
-    currentLanguage = language;
-    loadTranslations(language);
-}
-
 std::string Localization::getLocaleFilePath(const std::string& language) const {
-    return "locales/" + language + ".json";
+    return "Infrastructure/Localization/locales/" + language + ".json";
 }
 
 void Localization::loadTranslations(const std::string& language) {
@@ -20,28 +16,15 @@ void Localization::loadTranslations(const std::string& language) {
     std::ifstream file(filePath);
     
     if (!file.is_open()) {
-        throw std::runtime_error("Failed to open locale file: " + filePath);
+        std::ostringstream oss;
+        oss << "Failed to open locale file: " << filePath;
+        throw std::runtime_error(oss.str());
     }
+
+    std::string content((std::istreambuf_iterator<char>(file)), 
+                      std::istreambuf_iterator<char>());
     
-    translations.clear();
-    std::string line;
-    while (std::getline(file, line)) {
-        size_t delimiter = line.find(':');
-        if (delimiter != std::string::npos) {
-            std::string key = line.substr(0, delimiter);
-            std::string value = line.substr(delimiter + 1);
-            
-            // Trim
-            auto trim = [](std::string& s) {
-                s.erase(0, s.find_first_not_of(" \t\""));
-                s.erase(s.find_last_not_of(" \t\",") + 1);
-            };
-            
-            trim(key);
-            trim(value);
-            translations[key] = value;
-        }
-    }
+    translations = parser.parse(content);
 }
 
 std::string Localization::translate(const std::string& key) const {

@@ -1,4 +1,5 @@
 #include <memory>
+#include <iostream>
 #include "../Infrastructure/Config/Config.h"
 #include "../Infrastructure/Localization/Localization.h"
 #include "../UI/View/View.h"

@@ -1,24 +1,23 @@
 #include "JsonParser.h"
 
-namespace {
-    void throwParseError(const std::string& message, size_t pos) {
-        throw std::runtime_error("JSON parse error at position " + 
-                               std::to_string(pos) + ": " + message);
-    }
+void JsonParser::throwParseError(const std::string& message, size_t pos) const {
+    throw std::runtime_error("JSON parse error at position " + 
+                           std::to_string(pos) + ": " + message);
 }
 
 void JsonParser::skipWhitespace(const std::string& json, size_t& pos) {
-    while (pos < json.size() && isspace(json[pos])) {
+    while (pos < json.size() && (isspace(json[pos]) || json[pos] == '\n' || json[pos] == '\r')) {
         pos++;
     }
 }
 
-std::string JsonParser::parseString(const std::string& json, size_t& pos) {
-    if (json[pos] != '"') {
+std::string JsonParser::parseString(const std::string& json, size_t& pos)
+{
+    if (pos >= json.size() || json[pos] != '"') {
         throwParseError("Expected '\"'", pos);
     }
     pos++;
-    
+
     std::string result;
     while (pos < json.size() && json[pos] != '"') {
         if (json[pos] == '\\') {
@@ -26,13 +25,21 @@ std::string JsonParser::parseString(const std::string& json, size_t& pos) {
             if (pos >= json.size()) {
                 throwParseError("Unterminated escape sequence", pos);
             }
-            // Проста обробка escape-послідовностей
             switch (json[pos]) {
                 case '"': result += '"'; break;
                 case '\\': result += '\\'; break;
-                default: result += json[pos]; break;
+                case '/': result += '/'; break;
+                case 'b': result += '\b'; break;
+                case 'f': result += '\f'; break;
+                case 'n': result += '\n'; break;
+                case 'r': result += '\r'; break;
+                case 't': result += '\t'; break;
+                default: throwParseError("Invalid escape sequence", pos);
             }
         } else {
+            if (json[pos] == '\n' || json[pos] == '\r') {
+                throwParseError("Unterminated string", pos);
+            }
             result += json[pos];
         }
         pos++;
@@ -42,7 +49,6 @@ std::string JsonParser::parseString(const std::string& json, size_t& pos) {
         throwParseError("Unterminated string", pos);
     }
     pos++;
-    
     return result;
 }
 
@@ -56,7 +62,6 @@ std::string JsonParser::parseValue(const std::string& json, size_t& pos) {
         return parseString(json, pos);
     }
     
-    // Проста обробка boolean та null значень
     if (json.substr(pos, 4) == "true") {
         pos += 4;
         return "true";
@@ -70,23 +75,39 @@ std::string JsonParser::parseValue(const std::string& json, size_t& pos) {
         return "null";
     }
     
-    // Обробка чисел (спрощено)
-    std::string number;
-    while (pos < json.size() && (isdigit(json[pos]) || json[pos] == '.' || json[pos] == '-')) {
-        number += json[pos++];
-    }
-    if (!number.empty()) {
+    // Обробка чисел
+    if (json[pos] == '-' || isdigit(json[pos])) {
+        std::string number;
+        bool hasDecimal = false;
+        while (pos < json.size()) {
+            if (isdigit(json[pos])) {
+                number += json[pos++];
+            } else if (json[pos] == '.' && !hasDecimal) {
+                hasDecimal = true;
+                number += json[pos++];
+            } else if (json[pos] == '-') {
+                number += json[pos++];
+            } else {
+                break;
+            }
+        }
         return number;
     }
     
-    throwParseError("Unexpected token", pos);
+    throwParseError("Unexpected token '" + std::string(1, json[pos]) + "'", pos);
     return "";
 }
 
 std::unordered_map<std::string, std::string> JsonParser::parse(const std::string& json) {
     std::unordered_map<std::string, std::string> result;
     size_t pos = 0;
-    
+    parseObject(json, pos, "", result);
+    return result;
+}
+
+void JsonParser::parseObject(const std::string& json, size_t& pos, 
+                           const std::string& currentPath,
+                           std::unordered_map<std::string, std::string>& result) {
     skipWhitespace(json, pos);
     if (pos >= json.size() || json[pos] != '{') {
         throwParseError("Expected '{'", pos);
@@ -97,25 +118,28 @@ std::unordered_map<std::string, std::string> JsonParser::parse(const std::string
         skipWhitespace(json, pos);
         if (json[pos] == '}') {
             pos++;
-            break;
+            return;
         }
         
         std::string key = parseString(json, pos);
-        skipWhitespace(json, pos);
+        std::string fullKey = currentPath.empty() ? key : currentPath + "." + key;
         
+        skipWhitespace(json, pos);
         if (pos >= json.size() || json[pos] != ':') {
             throwParseError("Expected ':'", pos);
         }
         pos++;
+        skipWhitespace(json, pos);
         
-        std::string value = parseValue(json, pos);
-        result[key] = value;
+        if (json[pos] == '{') {
+            parseObject(json, pos, fullKey, result);
+        } else {
+            result[fullKey] = parseValue(json, pos);
+        }
         
         skipWhitespace(json, pos);
         if (pos < json.size() && json[pos] == ',') {
             pos++;
         }
     }
-    
-    return result;
 }

@@ -231,6 +231,7 @@
     <ClCompile Include="scr\Data\Mappers\EncryptionMapper.cpp" />
     <ClCompile Include="scr\Data\Parsers\JsonParser.cpp" />
     <ClCompile Include="scr\Data\Providers\KeyProvider\KeyProvider.cpp" />
+    <ClCompile Include="scr\Domain\Entities\EncryptionDocument.cpp" />
     <ClCompile Include="scr\Domain\UseCases\DecryptUseCase\DecryptUseCase.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -561,8 +562,8 @@
     <ClInclude Include="scr\Utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config.json" />
     <Content Include="scr\Domain\Repositories\Repository.h" />
+    <Content Include="scr\Infrastructure\Config\config.json" />
     <Content Include="scr\Infrastructure\Localization\locales\en.json" />
     <Content Include="scr\Infrastructure\Localization\locales\ru.json" />
     <Content Include="scr\Infrastructure\Localization\locales\uk.json" />

@@ -1,8 +1,8 @@
 #ifndef LOCALIZATION_H
 #define LOCALIZATION_H
 
-#include <string>
-#include <unordered_map>
+#include "../../lib/lib.h"
+#include "../../Data/Parsers/JsonParser.h"
 
 class Localization {
 public:
@@ -13,6 +13,7 @@ public:
 private:
     std::unordered_map<std::string, std::string> translations;
     std::string currentLanguage;
+    JsonParser parser;  // Додано
     
     void loadTranslations(const std::string& language);
     std::string getLocaleFilePath(const std::string& language) const;

@@ -17,9 +17,16 @@ public:
     void showError(const std::string& message);
     void showLanguageMenu();
     void setLanguage(const std::string& language);
+    
+    // Додано методи для кольорового виводу
+    void setTextColor(const std::string& hexColor);
+    void resetTextColor();
 
 private:
     std::shared_ptr<Localization> localization;
+    
+    // Додано для конвертації кольорів
+    std::string hexToAnsi(const std::string& hex);
 };
 
 #endif // VIEW_H

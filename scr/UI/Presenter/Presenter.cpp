@@ -36,8 +36,12 @@ void Presenter::handleEncryption() {
     auto key = view->getEncryptionKey();
     auto cipherType = view->getCipherType();
     
+    // Використовуємо конструктор з 3 параметрами (encryptedText буде додано пізніше)
+    EncryptedDocument doc(text, cipherType, key);
+    
+    // Шифруємо та встановлюємо результат
     std::string encryptedText = encryptUseCase->execute(text, cipherType, key);
-    EncryptedDocument doc(text, cipherType, key, encryptedText);
+    doc.setEncryptedText(encryptedText);
     
     repository->save(doc);
     view->showResult(encryptedText);

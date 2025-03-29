@@ -11,5 +11,9 @@
   "error": "Помилка: ",
   "invalid_choice": "Невірний вибір",
   "invalid_cipher": "Невірний тип шифру",
-  "language_set": "Мову встановлено на українську"
+  "language_set": "Мову встановлено на українську",
+  "language_selection": "Вибір мови",
+  "select_language": "Оберіть мову: ",
+  "invalid_input": "Невірне введення, спробуйте ще раз",
+  "action_completed": "Дію успішно виконано"
 }

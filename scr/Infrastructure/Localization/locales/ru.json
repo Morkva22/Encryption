@@ -11,5 +11,9 @@
   "error": "Ошибка: ",
   "invalid_choice": "Неверный выбор",
   "invalid_cipher": "Неверный тип шифра",
-  "language_set": "Язык изменен на русский"
+  "language_set": "Язык изменен на русский",
+  "language_selection": "Выбор языка",
+  "select_language": "Выберите язык: ",
+  "invalid_input": "Неверный ввод, попробуйте снова",
+  "action_completed": "Действие успешно выполнено"
 }

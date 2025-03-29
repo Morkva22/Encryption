@@ -534,6 +534,7 @@
     </ClCompile>
     <ClCompile Include="scr\Utils\Ciphers\Caesar\CaesarCipher.cpp" />
     <ClCompile Include="scr\Utils\Ciphers\XOR\XorCipher.cpp" />
+    <ClCompile Include="scr\Utils\ConsoleUtils\ConsoleUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="scr\Data\Data.h" />
@@ -559,11 +560,12 @@
     <ClInclude Include="scr\Utils\Ciphers\Caesar\CaesarCipher.h" />
     <ClInclude Include="scr\Utils\Ciphers\Cipher.h" />
     <ClInclude Include="scr\Utils\Ciphers\XOR\XorCipher.h" />
+    <ClInclude Include="scr\Utils\ConsoleUtils\ConsoleUtils.h" />
     <ClInclude Include="scr\Utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="config.json" />
     <Content Include="scr\Domain\Repositories\Repository.h" />
-    <Content Include="scr\Infrastructure\Config\config.json" />
     <Content Include="scr\Infrastructure\Localization\locales\en.json" />
     <Content Include="scr\Infrastructure\Localization\locales\ru.json" />
     <Content Include="scr\Infrastructure\Localization\locales\uk.json" />

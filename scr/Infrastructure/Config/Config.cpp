@@ -1,6 +1,8 @@
 #include "Config.h"
 #include <fstream>
 #include <stdexcept>
+#include <sstream>
+#include <cstdlib>
 
 Config::Config() {
     loadConfig();
@@ -31,7 +33,12 @@ void Config::loadConfig() {
 }
 
 bool Config::getBool(const std::string& key) const {
-    auto it = configData.find(key);
+    auto it = tempValues.find(key);
+    if (it != tempValues.end()) {
+        return it->second == "true";
+    }
+
+    it = configData.find(key);
     if (it == configData.end()) {
         throw std::runtime_error("Config key not found: " + key);
     }
@@ -39,7 +46,12 @@ bool Config::getBool(const std::string& key) const {
 }
 
 std::string Config::getString(const std::string& key) const {
-    auto it = configData.find(key);
+    auto it = tempValues.find(key);
+    if (it != tempValues.end()) {
+        return it->second;
+    }
+
+    it = configData.find(key);
     if (it == configData.end()) {
         throw std::runtime_error("Config key not found: " + key);
     }
@@ -50,7 +62,37 @@ std::string Config::getLanguage() const {
     return getString("ui.language");
 }
 
+int Config::getInt(const std::string& key) const {
+    std::string value = getString(key);
+    try {
+        return std::stoi(value);
+    } catch (...) {
+        throw std::runtime_error("Invalid integer value for key: " + key);
+    }
+}
+
+double Config::getDouble(const std::string& key) const {
+    std::string value = getString(key);
+    try {
+        return std::stod(value);
+    } catch (...) {
+        throw std::runtime_error("Invalid double value for key: " + key);
+    }
+}
+
+void Config::reload() {
+    loadConfig();
+}
+
 std::string Config::getColor(const std::string& name) const {
     auto it = colors.find(name);
     return it != colors.end() ? it->second : "#000000";
+}
+
+void Config::setTemporaryValue(const std::string& key, const std::string& value) {
+    tempValues[key] = value;
+}
+
+void Config::clearTemporaryValues() {
+    tempValues.clear();
 }

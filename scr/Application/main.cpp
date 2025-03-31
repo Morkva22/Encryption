@@ -1,6 +1,3 @@
-#include <memory>
-#include <iostream>
-#include <clocale>
 #include "../Infrastructure/Config/Config.h"
 #include "../Infrastructure/Localization/Localization.h"
 #include "../UI/View/View.h"
@@ -11,9 +8,6 @@
 #include "../Utils/Ciphers/Caesar/CaesarCipher.h"
 #include "../Utils/Ciphers/XOR/XorCipher.h"
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
 
 void initializeConsole() {
     #ifdef _WIN32

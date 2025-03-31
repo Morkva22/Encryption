@@ -16,6 +16,10 @@
 #include <limits>
 #include <unordered_map>
 #include <Windows.h>
+#include <future>
+#include <queue>
+#include <mutex>
+#include <chrono>
 
 
 using namespace std;

@@ -10,6 +10,6 @@
     }
   },
   "encryption": {
-    "key_autosave": true
+    "key_autosave": false
   }
 }

@@ -6,66 +6,75 @@
 #include <locale>
 #include <codecvt>
 
-std::string XorCipher::encrypt(const std::string& text, const std::string& key) {
-    if (key.empty()) throw std::runtime_error("Encryption key cannot be empty");
-    
-    // Конвертуємо вхідний текст у UTF-16 для коректної обробки Unicode
-    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-    std::wstring wideText = converter.from_bytes(text);
-    std::wstring wideKey = converter.from_bytes(key);
-    
-    std::wstring result;
-    result.reserve(wideText.size());
-    
-    for (size_t i = 0; i < wideText.size(); ++i) {
-        result += wideText[i] ^ wideKey[i % wideKey.size()];
-    }
-    
-    // Конвертуємо результат назад у UTF-8
-    return converter.to_bytes(result);
+using namespace std;
+
+// Конвертація між string та wstring
+static wstring_convert<codecvt_utf8_utf16<wchar_t>> converter;
+
+wstring string_to_wstring(const string& str) {
+    return converter.from_bytes(str);
 }
 
-std::string XorCipher::decrypt(const std::string& text, const std::string& key) {
+string wstring_to_string(const wstring& wstr) {
+    return converter.to_bytes(wstr);
+}
+
+string XorCipher::encrypt(const string& text, const string& key) {
+    if (key.empty()) throw runtime_error("Encryption key cannot be empty");
+    
+    wstring wtext = string_to_wstring(text);
+    wstring wkey = string_to_wstring(key);
+    wstring result;
+    
+    for (size_t i = 0; i < wtext.size(); ++i) {
+        wchar_t encrypted = wtext[i] ^ wkey[i % wkey.size()];
+        result += encrypted;
+    }
+    
+    return wstring_to_string(result);
+}
+
+string XorCipher::decrypt(const string& text, const string& key) {
     return encrypt(text, key); // XOR - симетричний алгоритм
 }
 
-std::string XorCipher::toPrintable(const std::string& data) {
+string XorCipher::toPrintable(const string& data) {
     try {
-        std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-        std::wstring wide = converter.from_bytes(data);
+        wstring wdata = string_to_wstring(data);
+        string result;
         
-        std::ostringstream oss;
-        for (wchar_t c : wide) {
-            if (c >= 32 && c <= 126) { // Друковані ASCII символи
-                oss << (char)c;
+        for (wchar_t c : wdata) {
+            if (c >= 32 && c <= 126) { // ASCII символи
+                result += static_cast<char>(c);
             } else {
-                oss << "\\u" << std::hex << std::setw(4) << std::setfill('0') << (int)c;
+                // Для кирилиці та інших Unicode
+                wstring ws(1, c);
+                result += converter.to_bytes(ws);
             }
         }
-        return oss.str();
+        return result;
     } catch (...) {
-        // Якщо конвертація не вдалася, повертаємо hex-представлення
-        std::ostringstream oss;
+        string result;
         for (unsigned char c : data) {
-            oss << "\\x" << std::hex << std::setw(2) << std::setfill('0') << (int)c;
+            result += static_cast<char>(c);
         }
-        return oss.str();
+        return result;
     }
 }
 
-std::string XorCipher::toHex(const std::string& data) {
-    std::ostringstream oss;
+string XorCipher::toHex(const string& data) {
+    ostringstream oss;
     for (unsigned char c : data) {
-        oss << std::hex << std::setw(2) << std::setfill('0') << (int)c;
+        oss << hex << setw(2) << setfill('0') << static_cast<int>(c);
     }
     return oss.str();
 }
 
-std::string XorCipher::fromHex(const std::string& hex) {
-    std::string result;
+string XorCipher::fromHex(const string& hex) {
+    string result;
     for (size_t i = 0; i < hex.length(); i += 2) {
-        std::string byte = hex.substr(i, 2);
-        result += static_cast<char>(std::stoi(byte, nullptr, 16));
+        string byte = hex.substr(i, 2);
+        result += static_cast<char>(stoi(byte, nullptr, 16));
     }
     return result;
 }

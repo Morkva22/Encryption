@@ -1,85 +1,83 @@
-#include "FileStorageAdapter.h"
+    #include "FileStorageAdapter.h"
 
-FileStorageAdapter::FileStorageAdapter(const string& filePath) 
-    : filePath(filePath) {
-    ensureFileExists();
-}
-
-void FileStorageAdapter::ensureFileExists() const {
-    ifstream test(filePath.c_str());
-    if (!test) {
-        ofstream create(filePath.c_str());
-        if (!create) throw runtime_error("Failed to create file");
+    FileStorageAdapter::FileStorageAdapter(const string& filePath) 
+        : filePath(filePath) {
+        ensureFileExists();
     }
-}
 
-void FileStorageAdapter::save(const EncryptedDocument& document) {
-    auto dto = EncryptionMapper::toDTO(document);
-    
-    // Зберігаємо у hex-форматі для гарантованої цілісності
-    std::string hexData = XorCipher::toHex(dto.encryptedText);
-    
-    std::ofstream file(filePath, std::ios::app);
-    if (!file) throw std::runtime_error("Failed to open file");
-    file << hexData << "\n";
-}
-
-std::vector<EncryptedDocument> FileStorageAdapter::loadAll() {
-    std::ifstream file(filePath);
-    if (!file) throw std::runtime_error("Failed to open file");
-
-    std::vector<EncryptedDocument> documents;
-    std::string line;
-    
-    while (std::getline(file, line)) {
-        if (!line.empty()) {
-            auto dto = EncryptionMapper::fromStorageString(line);
-            // Конвертуємо з hex назад у бінарний формат
-            dto.encryptedText = XorCipher::fromHex(line);
-            documents.push_back(EncryptionMapper::toDomain(dto));
+    void FileStorageAdapter::ensureFileExists() const {
+        ifstream test(filePath.c_str());
+        if (!test) {
+            ofstream create(filePath.c_str());
+            if (!create) throw runtime_error("Failed to create file");
         }
     }
+
+void FileStorageAdapter::save(const EncryptedDocument& document) {
+        auto dto = EncryptionMapper::toDTO(document);
+        std::string hexData = XorCipher::toHex(dto.encryptedText); // Використання методу
     
-    return documents;
-}
-
-string FileStorageAdapter::getFilePath() const {
-    return filePath;
-}
-
-vector<string> FileStorageAdapter::readLines(const string& file_path) {
-    ifstream file(file_path.c_str());
-    if (!file.is_open()) {
-        throw runtime_error("Failed to open file: " + file_path);
+        std::ofstream file(filePath, std::ios::app);
+        if (!file) throw std::runtime_error("Failed to open file");
+        file << hexData << "\n";
     }
 
-    vector<string> lines;
-    string line;
-    while (getline(file, line)) {
-        lines.push_back(line);
+    std::vector<EncryptedDocument> FileStorageAdapter::loadAll() {
+        std::ifstream file(filePath);
+        if (!file) throw std::runtime_error("Failed to open file");
+
+        std::vector<EncryptedDocument> documents;
+        std::string line;
+        
+        while (std::getline(file, line)) {
+            if (!line.empty()) {
+                auto dto = EncryptionMapper::fromStorageString(line);
+                // Конвертуємо з hex назад у бінарний формат
+                dto.encryptedText = XorCipher::fromHex(line);
+                documents.push_back(EncryptionMapper::toDomain(dto));
+            }
+        }
+        
+        return documents;
     }
 
-    return lines;
-}
-
-void FileStorageAdapter::writeLines(const string& file_path, const vector<string>& lines) {
-    ofstream file(file_path.c_str());
-    if (!file.is_open()) {
-        throw runtime_error("Failed to open file for writing: " + file_path);
+    string FileStorageAdapter::getFilePath() const {
+        return filePath;
     }
 
-    for (const auto& line : lines) {
-        file << line << "\n";
-    }
-}
+    vector<string> FileStorageAdapter::readLines(const string& file_path) {
+        ifstream file(file_path.c_str());
+        if (!file.is_open()) {
+            throw runtime_error("Failed to open file: " + file_path);
+        }
 
-void FileStorageAdapter::deleteFile(const string& filePath) {
-    if (remove(filePath.c_str()) != 0) {
-        throw runtime_error("Failed to delete file: " + filePath);
-    }
-}
+        vector<string> lines;
+        string line;
+        while (getline(file, line)) {
+            lines.push_back(line);
+        }
 
-bool FileStorageAdapter::fileExists(const string& file_path) const {
-    ifstream file(file_path.c_str());
-    return file.good();
-}
+        return lines;
+    }
+
+    void FileStorageAdapter::writeLines(const string& file_path, const vector<string>& lines) {
+        ofstream file(file_path.c_str());
+        if (!file.is_open()) {
+            throw runtime_error("Failed to open file for writing: " + file_path);
+        }
+
+        for (const auto& line : lines) {
+            file << line << "\n";
+        }
+    }
+
+    void FileStorageAdapter::deleteFile(const string& filePath) {
+        if (remove(filePath.c_str()) != 0) {
+            throw runtime_error("Failed to delete file: " + filePath);
+        }
+    }
+
+    bool FileStorageAdapter::fileExists(const string& file_path) const {
+        ifstream file(file_path.c_str());
+        return file.good();
+    }

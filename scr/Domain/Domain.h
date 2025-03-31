@@ -1,14 +1,9 @@
 #ifndef DOMAIN_H
 #define DOMAIN_H
 
-// Основні сутності
-#include "Entities/EncryptionData.h"
+#include "../data/DTO/EncryptionData.h"
+#include "Repositories/Repository.h"
+#include "UseCases/EncryptUseCases/EncryptUseCase.h"
+#include "UseCases/DecryptUseCases/DecryptUseCase.h"
 
-// Репозиторії
-#include "Repositories/EncryptionRepository.h"
-
-// Юзкейси
-#include "UseCases/EncryptUseCase.h"
-#include "UseCases/DecryptUseCase.h"
-
-#endif // DOMAIN_H
+#endif 

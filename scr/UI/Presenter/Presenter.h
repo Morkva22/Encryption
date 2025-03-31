@@ -2,19 +2,20 @@
 #define PRESENTER_H
 
 #include "../../lib/lib.h"
-#include "../../Domain/UseCases/EncryptUseCase.h"
-#include "../../Domain/UseCases/DecryptUseCase.h"
-#include "../../Domain/Repositories/EncryptionRepository.h"
-#include "../../UI/View/View.h"
+#include "../../Domain/UseCases/EncryptUseCases/EncryptUseCase.h"
+#include "../../Domain/UseCases/DecryptUseCases/DecryptUseCase.h"
+#include "../../Domain/Repositories/Repository.h"
+#include "../View/View.h"
 #include "../../Infrastructure/Config/ConfigInterface.h"
+#include "../../Domain/Entities/EncryptionDocument.h"
 
 class Presenter {
 public:
     Presenter(
-        std::unique_ptr<EncryptUseCase> encryptor,
-        std::unique_ptr<DecryptUseCase> decryptor,
-        std::unique_ptr<EncryptionRepository> repo,
-        std::unique_ptr<View> view,
+        unique_ptr<EncryptUseCase> encryptor,
+        unique_ptr<DecryptUseCase> decryptor,
+        unique_ptr<Repository> repository,
+        unique_ptr<View> view,
         ConfigInterface& config
     );
     
@@ -24,10 +25,10 @@ private:
     void handleEncryption();
     void handleDecryption();
     
-    std::unique_ptr<EncryptUseCase> encryptUseCase;
-    std::unique_ptr<DecryptUseCase> decryptUseCase;
-    std::unique_ptr<EncryptionRepository> repository;
-    std::unique_ptr<View> view;
+    unique_ptr<EncryptUseCase> encryptUseCase;
+    unique_ptr<DecryptUseCase> decryptUseCase;
+    unique_ptr<Repository> repository;
+    unique_ptr<View> view;
     ConfigInterface& config;
 };
 

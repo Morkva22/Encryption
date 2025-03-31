@@ -1,21 +1,30 @@
 #ifndef LOCALIZATION_H
 #define LOCALIZATION_H
 
-#include <string>
-#include <unordered_map>
-
-class Localization {
+#include "LocalizationInterface.h"
+#include "../../Data/Parsers/JsonParser.h"
+#include "../../lib/lib.h"
+class Localization : public LocalizationInterface {
 public:
-    explicit Localization(const std::string& defaultLanguage);
-    std::string translate(const std::string& key) const;
-    void setLanguage(const std::string& language);
+    Localization(const string& basePath, const string& defaultLanguage);
     
+    static shared_ptr<Localization> createWithFallback(
+        const string& basePath,
+        const string& preferredLang,
+        const string& fallbackLang = "en"
+    );
+    
+    void setLanguage(const string& language);
+    string translate(const string& key) const override;
+
 private:
-    std::unordered_map<std::string, std::string> translations;
-    std::string currentLanguage;
-    
-    void loadTranslations(const std::string& language);
-    std::string getLocaleFilePath(const std::string& language) const;
+    void loadTranslations(const string& language);
+    string getlocalefilepath(const string& language) const;
+
+    string basePath;
+    unordered_map<std::string, string> translations;
+    string currentLanguage;
+    JsonParser parser;
 };
 
-#endif // LOCALIZATION_H
+#endif 

@@ -5,12 +5,16 @@
 
 class JsonParser {
 public:
-    std::unordered_map<std::string, std::string> parse(const std::string& json);
+    unordered_map<string, string> parse(const string& json);
     
 private:
-    void skipWhitespace(const std::string& json, size_t& pos);
-    std::string parseString(const std::string& json, size_t& pos);
-    std::string parseValue(const std::string& json, size_t& pos);
+    void skipWhitespace(const string& json, size_t& pos);
+    string parseString(const string& json, size_t& pos);
+    string parseValue(const string& json, size_t& pos);
+    void parseObject(const string& json, size_t& pos, 
+                    const string& currentPath,
+                    unordered_map<string, string>& result);
+    void throwParseError(const string& message, size_t pos) const;
 };
 
-#endif // JSON_PARSER_H
+#endif 

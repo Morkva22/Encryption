@@ -1,0 +1,14 @@
+C:\Users\Mark\RiderProjects\Encryption\scr\Application\main.cpp;C:\Users\Mark\RiderProjects\Encryption\Encryption\x64\Debug\main.obj
+C:\Users\Mark\RiderProjects\Encryption\scr\Data\Mappers\EncryptionMapper.cpp;C:\Users\Mark\RiderProjects\Encryption\Encryption\x64\Debug\EncryptionMapper.obj
+C:\Users\Mark\RiderProjects\Encryption\scr\Data\Parsers\JsonParser.cpp;C:\Users\Mark\RiderProjects\Encryption\Encryption\x64\Debug\JsonParser.obj
+C:\Users\Mark\RiderProjects\Encryption\scr\Data\Providers\FileProvider\FileSystemProvider.cpp;C:\Users\Mark\RiderProjects\Encryption\Encryption\x64\Debug\FileSystemProvider.obj
+C:\Users\Mark\RiderProjects\Encryption\scr\Data\Providers\KeyProvider\KeyProvider.cpp;C:\Users\Mark\RiderProjects\Encryption\Encryption\x64\Debug\KeyProvider.obj
+C:\Users\Mark\RiderProjects\Encryption\scr\Domain\Entities\EncryptionData.cpp;C:\Users\Mark\RiderProjects\Encryption\Encryption\x64\Debug\EncryptionData.obj
+C:\Users\Mark\RiderProjects\Encryption\scr\Domain\UseCases\DecryptUseCase.cpp;C:\Users\Mark\RiderProjects\Encryption\Encryption\x64\Debug\DecryptUseCase.obj
+C:\Users\Mark\RiderProjects\Encryption\scr\Domain\UseCases\EncryptUseCase.cpp;C:\Users\Mark\RiderProjects\Encryption\Encryption\x64\Debug\EncryptUseCase.obj
+C:\Users\Mark\RiderProjects\Encryption\scr\Infrastructure\Config\Config.cpp;C:\Users\Mark\RiderProjects\Encryption\Encryption\x64\Debug\Config.obj
+C:\Users\Mark\RiderProjects\Encryption\scr\Infrastructure\Localization\Localization.cpp;C:\Users\Mark\RiderProjects\Encryption\Encryption\x64\Debug\Localization.obj
+C:\Users\Mark\RiderProjects\Encryption\scr\UI\Presenter.cpp;C:\Users\Mark\RiderProjects\Encryption\Encryption\x64\Debug\Presenter.obj
+C:\Users\Mark\RiderProjects\Encryption\scr\UI\View.cpp;C:\Users\Mark\RiderProjects\Encryption\Encryption\x64\Debug\View.obj
+C:\Users\Mark\RiderProjects\Encryption\scr\Utils\Ciphers\Caesar\CaesarCipher.cpp;C:\Users\Mark\RiderProjects\Encryption\Encryption\x64\Debug\CaesarCipher.obj
+C:\Users\Mark\RiderProjects\Encryption\scr\Utils\Ciphers\XOR\XorCipher.cpp;C:\Users\Mark\RiderProjects\Encryption\Encryption\x64\Debug\XorCipher.obj

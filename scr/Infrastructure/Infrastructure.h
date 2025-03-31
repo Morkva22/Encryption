@@ -1,13 +1,10 @@
 #ifndef INFRASTRUCTURE_H
 #define INFRASTRUCTURE_H
 
-// Конфігурація
 #include "Config/Config.h"
-
-// Локалізація
+#include "Config/ConfigInterface.h"
 #include "Localization/Localization.h"
+#include "Localization/LocalizationInterface.h"
+#include "../Domain/Repositories/Repository.h"
 
-// Репозиторії
-#include "../Domain/Repositories/FileEncryptionRepository.h"
-
-#endif // INFRASTRUCTURE_H
+#endif

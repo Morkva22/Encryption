@@ -1,6 +1,6 @@
 #include "KeyProvider.h"
-#include <fstream>
-#include <stdexcept>
+
+using namespace std;
 
 KeyProvider::KeyProvider(const string& filename) 
     : filename(filename) {}

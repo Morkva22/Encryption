@@ -11,5 +11,9 @@
   "error": "Error: ",
   "invalid_choice": "Invalid choice",
   "invalid_cipher": "Invalid cipher type",
-  "language_set": "Language set to English"
+  "language_set": "Language set to English",
+  "language_selection": "Language Selection",
+  "select_language": "Select language: ",
+  "invalid_input": "Invalid input, please try again",
+  "action_completed": "Action completed successfully"
 }

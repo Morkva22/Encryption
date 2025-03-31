@@ -5,12 +5,12 @@
 
 class KeyProvider {
 public:
-    explicit KeyProvider(const std::string& filename);
-    void saveKey(const std::string& cipherName, int key);
-    int loadKey(const std::string& cipherName);
+    explicit KeyProvider(const string& filename);
+    void saveKey(const string& cipherName, int key);
+    int loadKey(const string& cipherName);
 
 private:
-    std::string filename;
+    string filename;
 };
 
-#endif // KEY_PROVIDER_H
+#endif

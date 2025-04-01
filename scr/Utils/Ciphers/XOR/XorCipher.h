@@ -21,4 +21,4 @@ private:
     static std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 };
 
-#endif // XOR_CIPHER_H
+#endif 

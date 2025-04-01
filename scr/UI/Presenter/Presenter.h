@@ -32,4 +32,4 @@ private:
     ConfigInterface& config;
 };
 
-#endif // PRESENTER_H
+#endif

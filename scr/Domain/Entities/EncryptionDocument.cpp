@@ -27,4 +27,4 @@ int EncryptedDocument::getKey() const {
 
 void EncryptedDocument::setEncryptedText(const string& encrypted_text) {
     this->encryptedText = encrypted_text;
-}   
+}

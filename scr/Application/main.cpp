@@ -8,38 +8,34 @@
 #include "../Utils/Ciphers/Caesar/CaesarCipher.h"
 #include "../Utils/Ciphers/XOR/XorCipher.h"
 
-
 void initializeConsole() {
     #ifdef _WIN32
-    // Встановлюємо UTF-8 для вводу/виводу
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
-    
-    // Налаштовуємо буферизацію для коректного виводу UTF-8
-    std::ios_base::sync_with_stdio(false);
-    std::wcout.imbue(std::locale(""));
-    std::wcin.imbue(std::locale(""));
+    ios_base::sync_with_stdio(false);
+    wcout.imbue(locale(""));
+    wcin.imbue(locale(""));
     #else
-    std::setlocale(LC_ALL, "en_US.utf8");
+    setlocale(LC_ALL, "en_US.utf8");
     #endif
 }
 
-std::shared_ptr<Localization> initializeLocalization(const Config& config) {
-    const std::string localesPath = "scr/Infrastructure/Localization/locales/";
+shared_ptr<Localization> initializeLocalization(const Config& config) {
+    const string localesPath = "scr/Infrastructure/Localization/locales/";
     
     try {
-        auto loc = std::make_shared<Localization>(localesPath, config.getLanguage());
-        std::cout << loc->translate("language_set") << std::endl;
+        auto loc = make_shared<Localization>(localesPath, config.getLanguage());
+        cout << loc->translate("language_set") << endl;
         return loc;
-    } catch (const std::exception& e) {
-        std::cerr << "Localization error: " << e.what() << std::endl;
+    } catch (const exception& e) {
+        cerr << "Localization error: " << e.what() << endl;
         
         try {
-            auto loc = std::make_shared<Localization>(localesPath, "en");
-            std::cerr << "Falling back to English localization" << std::endl;
+            auto loc = make_shared<Localization>(localesPath, "en");
+            cerr << "Falling back to English localization" << endl;
             return loc;
         } catch (...) {
-            throw std::runtime_error("Critical: Failed to load any localization");
+            throw runtime_error("Critical: Failed to load any localization");
         }
     }
 }
@@ -50,36 +46,36 @@ int main() {
     try {
         Config config;
         auto localization = initializeLocalization(config);
-        auto view = std::make_unique<View>(localization);
-        auto fileAdapter = std::make_unique<FileStorageAdapter>("encrypted_data.txt");
+        auto view = make_unique<View>(localization);
+        auto fileAdapter = make_unique<FileStorageAdapter>("encrypted_data.txt");
         
-        auto caesar = std::make_shared<CaesarCipher>();
-        auto xorCipher = std::make_shared<XorCipher>();
+        auto caesar = make_shared<CaesarCipher>();
+        auto xorCipher = make_shared<XorCipher>();
         
-        auto encryptor = std::make_unique<EncryptUseCase>();
+        auto encryptor = make_unique<EncryptUseCase>();
         encryptor->registerCipher("caesar", caesar);
         encryptor->registerCipher("xor", xorCipher);
         
-        auto decryptor = std::make_unique<DecryptUseCase>();
+        auto decryptor = make_unique<DecryptUseCase>();
         decryptor->registerCipher("caesar", caesar);
         decryptor->registerCipher("xor", xorCipher);
         
         auto presenter = PresenterFactory::create(
-            std::move(encryptor),
-            std::move(decryptor),
-            std::move(fileAdapter),
-            std::move(view),
+            move(encryptor),
+            move(decryptor),
+            move(fileAdapter),
+            move(view),
             config
         );
         
         presenter->run();
 
-    } catch (const std::exception& e) {
-        std::cerr << "\nFATAL ERROR: " << e.what() << std::endl;
-        std::cerr << "Possible solutions:" << std::endl;
-        std::cerr << "1. Check 'locales' folder exists with translation files" << std::endl;
-        std::cerr << "2. Verify file permissions" << std::endl;
-        std::cerr << "3. Check config.json exists with valid settings" << std::endl;
+    } catch (const exception& e) {
+        cerr << "\nFATAL ERROR: " << e.what() << endl;
+        cerr << "Possible solutions:" << endl;
+        cerr << "1. Check 'locales' folder exists with translation files" << endl;
+        cerr << "2. Verify file permissions" << endl;
+        cerr << "3. Check config.json exists with valid settings" << endl;
         return 1;
     }
     

@@ -9,4 +9,4 @@ public:
     virtual class EncryptionData deserialize(const string& serialized) = 0;
 };
 
-#endif 
+#endif

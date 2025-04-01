@@ -22,9 +22,9 @@ private:
     string getlocalefilepath(const string& language) const;
 
     string basePath;
-    unordered_map<std::string, string> translations;
+    unordered_map<string, string> translations;
     string currentLanguage;
     JsonParser parser;
 };
 
-#endif 
+#endif

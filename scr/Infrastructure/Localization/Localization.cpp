@@ -68,7 +68,6 @@ shared_ptr<Localization> Localization::createWithFallback(
 
 void Localization::setLanguage(const string& language) {
 #ifdef _WIN32
-    // Налаштування консолі Windows для UTF-8
     SetConsoleOutputCP(65001);
 #endif
     
@@ -98,4 +97,3 @@ string Localization::translate(const string& key) const {
     auto it = translations.find(key);
     return it != translations.end() ? it->second : "[" + key + "]";
 }
-

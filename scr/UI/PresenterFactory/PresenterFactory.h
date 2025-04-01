@@ -1,14 +1,12 @@
 #ifndef PRESENTER_FACTORY_H
 #define PRESENTER_FACTORY_H
+
 #include "../Presenter/Presenter.h"
 #include "../../Domain/UseCases/EncryptUseCases/EncryptUseCase.h"
 #include "../../Domain/UseCases/DecryptUseCases/DecryptUseCase.h"
 #include "../../Infrastructure/Adapters/FileStorageAdapter.h"
 #include "../../UI/View/View.h"
 #include "../../Infrastructure/Config/ConfigInterface.h"
-#include "../../lib/lib.h"
-
-class Presenter;
 
 class PresenterFactory {
 public:
@@ -21,4 +19,4 @@ public:
     );
 };
 
-#endif 
+#endif

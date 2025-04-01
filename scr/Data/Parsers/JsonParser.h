@@ -17,4 +17,4 @@ private:
     void throwParseError(const string& message, size_t pos) const;
 };
 
-#endif 
+#endif

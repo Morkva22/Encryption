@@ -2,12 +2,12 @@
 #define CAESAR_CIPHER_H
 
 #include "../Cipher.h"
-#include <string>
+#include "../../../lib/lib.h"
 
 class CaesarCipher : public Cipher {
 public:
-    std::string encrypt(const std::string& text, const std::string& key) override;
-    std::string decrypt(const std::string& text, const std::string& key) override;
+    string encrypt(const string& text, const string& key) override;
+    string decrypt(const string& text, const string& key) override;
 };
 
 #endif

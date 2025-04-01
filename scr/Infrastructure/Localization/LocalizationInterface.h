@@ -8,4 +8,4 @@ public:
     virtual string translate(const string& key) const = 0;
 };
 
-#endif 
+#endif

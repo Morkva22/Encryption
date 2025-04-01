@@ -2,7 +2,6 @@
 #define ENCRYPTIONDATA_H
 #include "../..//lib/lib.h"
 
-
 struct EncryptionData
 {
     string text;
@@ -10,4 +9,4 @@ struct EncryptionData
     int key;
     string cipherType;
 };
-#endif 
+#endif // ENCRYPTIONDATA_H

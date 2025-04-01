@@ -12,4 +12,4 @@ public:
     virtual string getFilePath() const = 0;
 };
 
-#endif // REPOSITORY_H
+#endif

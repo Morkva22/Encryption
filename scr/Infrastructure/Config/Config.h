@@ -27,4 +27,4 @@ private:
     JsonParser parser;
 };
 
-#endif 
+#endif

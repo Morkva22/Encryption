@@ -1,79 +1,82 @@
-    #include "FileStorageAdapter.h"
+#include "FileStorageAdapter.h"
 
-    FileStorageAdapter::FileStorageAdapter(const string& filePath) 
-        : filePath(filePath) {
-        ensureFileExists();
-    }
+FileStorageAdapter::FileStorageAdapter(const string& filePath) 
+    : filePath(filePath) {
+    ensureFileExists();
+}
 
-    void FileStorageAdapter::ensureFileExists() const {
-        ifstream test(filePath.c_str());
-        if (!test) {
-            ofstream create(filePath.c_str());
-            if (!create) throw runtime_error("Failed to create file");
-        }
+void FileStorageAdapter::ensureFileExists() const {
+    ifstream test(filePath);
+    if (!test) {
+        ofstream create(filePath);
+        if (!create) throw runtime_error("Failed to create file");
     }
+}
 
 void FileStorageAdapter::save(const EncryptedDocument& document) {
-        auto dto = EncryptionMapper::toDTO(document);
-        std::string hexData = XorCipher::toHex(dto.encryptedText); // Використання методу
+    auto dto = EncryptionMapper::toDTO(document);
+    string hexData = XorCipher::toHex(dto.encryptedText);
     
-        std::ofstream file(filePath, std::ios::app);
-        if (!file) throw std::runtime_error("Failed to open file");
-        file << hexData << "\n";
-    }
+    ofstream file(filePath, ios::app);
+    if (!file) throw runtime_error("Failed to open file");
+    file << hexData << "\n";
+}
 
 vector<EncryptedDocument> FileStorageAdapter::loadAll() {
     ifstream file(filePath);
-    if (!file) throw runtime_error("Can't open file");
+    if (!file) throw runtime_error("Failed to open file");
 
-    vector<EncryptedDocument> docs;
+    vector<EncryptedDocument> documents;
     string line;
+    
     while (getline(file, line)) {
         if (!line.empty()) {
             auto dto = EncryptionMapper::fromStorageString(line);
             dto.encryptedText = XorCipher::fromHex(line);
-            docs.push_back(EncryptionMapper::toDomain(dto));
+            documents.push_back(EncryptionMapper::toDomain(dto));
         }
     }
-    return docs;
+    
+    return documents;
 }
-    string FileStorageAdapter::getFilePath() const {
-        return filePath;
+
+string FileStorageAdapter::getFilePath() const {
+    return filePath;
+}
+
+vector<string> FileStorageAdapter::readLines(const string& file_path) {
+    ifstream file(file_path);
+    if (!file.is_open()) {
+        throw runtime_error("Failed to open file: " + file_path);
     }
 
-    vector<string> FileStorageAdapter::readLines(const string& file_path) {
-        ifstream file(file_path.c_str());
-        if (!file.is_open()) {
-            throw runtime_error("Failed to open file: " + file_path);
-        }
-
-        vector<string> lines;
-        string line;
-        while (getline(file, line)) {
-            lines.push_back(line);
-        }
-
-        return lines;
+    vector<string> lines;
+    string line;
+    while (getline(file, line)) {
+        lines.push_back(line);
     }
 
-    void FileStorageAdapter::writeLines(const string& file_path, const vector<string>& lines) {
-        ofstream file(file_path.c_str());
-        if (!file.is_open()) {
-            throw runtime_error("Failed to open file for writing: " + file_path);
-        }
+    return lines;
+}
 
-        for (const auto& line : lines) {
-            file << line << "\n";
-        }
+void FileStorageAdapter::writeLines(const string& file_path, const vector<string>& lines) {
+    ofstream file(file_path);
+    if (!file.is_open()) {
+        throw runtime_error("Failed to open file for writing: " + file_path);
     }
 
-    void FileStorageAdapter::deleteFile(const string& filePath) {
-        if (remove(filePath.c_str()) != 0) {
-            throw runtime_error("Failed to delete file: " + filePath);
-        }
+    for (const auto& line : lines) {
+        file << line << "\n";
     }
+}
 
-    bool FileStorageAdapter::fileExists(const string& file_path) const {
-        ifstream file(file_path.c_str());
-        return file.good();
+void FileStorageAdapter::deleteFile(const string& filePath) {
+    if (remove(filePath.c_str()) != 0) {
+        throw runtime_error("Failed to delete file: " + filePath);
     }
+}
+
+bool FileStorageAdapter::fileExists(const string& file_path) const {
+    ifstream file(file_path);
+    return file.good();
+}

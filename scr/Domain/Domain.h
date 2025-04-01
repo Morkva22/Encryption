@@ -6,4 +6,4 @@
 #include "UseCases/EncryptUseCases/EncryptUseCase.h"
 #include "UseCases/DecryptUseCases/DecryptUseCase.h"
 
-#endif 
+#endif

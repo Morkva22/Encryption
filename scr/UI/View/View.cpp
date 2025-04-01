@@ -1,147 +1,66 @@
 #include "View.h"
-
-#ifdef _WIN32
-#endif
+#include <limits>
 
 View::View(shared_ptr<Localization> localization) 
-    : localization(move(localization)) {}
-
-#ifdef _WIN32
-void View::setConsoleColor(int color) {
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, color);
-}
-#else
-void View::setTextColor(const string& ansiCode) {
-    cout << ansiCode;
-}
-#endif
-
-void View::resetConsoleColor() {
-    #ifdef _WIN32
-    setConsoleColor(15);
-    #else
-    cout << "\033[0m";
-    #endif
-}
+    : localization(localization) {}
 
 void View::showMainMenu() {
-    #ifdef _WIN32
-    setConsoleColor(9);
-    #else
-    setTextColor("\033[1;34m");
-    #endif
-    
-    cout << localization->translate("main_menu") << "\n";
-    
-    #ifdef _WIN32
-    setConsoleColor(10);
-    #else
-    setTextColor("\033[1;32m");
-    #endif
-    
-    cout << localization->translate("encrypt_option") << "\n"
-              << localization->translate("decrypt_option") << "\n"
-              << localization->translate("exit_option") << "\n";
-    
-    resetConsoleColor();
-    cout << localization->translate("choose_option");
-}
-
-void View::showLanguageMenu() {
-    #ifdef _WIN32
-    setConsoleColor(9);
-    #else
-    setTextColor("\033[1;34m");
-    #endif
-    
-    cout << "\n=== " << localization->translate("language_selection") << " ===\n";
-    
-    #ifdef _WIN32
-    setConsoleColor(10);
-    #else
-    setTextColor("\033[1;32m");
-    #endif
-    
-    cout << "1. English\n"
-              << "2. Українська\n"
-              << "3. Русский\n";
-    
-    resetConsoleColor();
-    cout << localization->translate("select_language");
+    cout << localization->translate("main_menu") << endl;
+    cout << localization->translate("encrypt_option") << endl;
+    cout << localization->translate("decrypt_option") << endl;
+    cout << localization->translate("exit_option") << endl;
 }
 
 int View::getUserChoice() {
     int choice;
-    while (!(cin >> choice)) {
+    while(!(cin >> choice) || choice < 1 || choice > 3) {
         cin.clear();
-        cin.ignore(10000, '\n');  
-        showError(localization->translate("invalid_input"));
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        showError(localization->translate("invalid_choice"));
     }
-    cin.ignore(10000, '\n');
     return choice;
 }
 
 string View::getInputText() {
-    cout << localization->translate("enter_text");
-    string text;
-    getline(cin, text);
-    return text;
+    string input;
+    cout << localization->translate("enter_text") << ": ";
+    cin.ignore();
+    getline(cin, input);
+    return input;
 }
 
 int View::getEncryptionKey() {
-    cout << localization->translate("enter_key");
     int key;
-    while (!(cin >> key)) {
+    cout << localization->translate("enter_key") << ": ";
+    while(!(cin >> key)) {
         cin.clear();
-        cin.ignore(10000, '\n');
-        showError(localization->translate("invalid_input"));
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        showError(localization->translate("invalid_key"));
     }
-    cin.ignore(10000, '\n');
     return key;
 }
 
 string View::getCipherType() {
-    cout << localization->translate("choose_cipher");
     string type;
+    cout << localization->translate("select_cipher") << ": ";
     cin >> type;
-    cin.ignore(10000, '\n');
-
-    if (type != "caesar" && type != "xor") {
-        showError(localization->translate("invalid_cipher"));
-        throw invalid_argument("Invalid cipher type");
-    }
     return type;
 }
 
-void View::showResult(const std::string& result) {
-    std::cout << localization->translate("result");
-    
-    // Відображаємо у читабельному форматі
-    std::cout << XorCipher::toPrintable(result) << std::endl;
-    
+void View::showResult(const string& result) {
+    cout << localization->translate("result") << ": " << result << endl;
 }
 
 void View::showError(const string& message) {
-    #ifdef _WIN32
-    setConsoleColor(12);
-    #else
-    setTextColor("\033[1;31m");
-    #endif
-    
-    cerr << localization->translate("error") << message << "\n";
-    resetConsoleColor();
+    cerr << message << endl;
+}
+
+void View::showLanguageMenu() {
+    cout << localization->translate("select_language") << endl;
+    cout << "1. English" << endl;
+    cout << "2. Українська" << endl;
 }
 
 void View::setLanguage(const string& language) {
     localization->setLanguage(language);
-    
-    #ifdef _WIN32
-    setConsoleColor(10);
-    #else
-    setTextColor("\033[1;32m");
-    #endif
-    
-    cout << localization->translate("language_set") << "\n";
-    resetConsoleColor();
 }

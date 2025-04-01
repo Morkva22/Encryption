@@ -15,4 +15,4 @@ public:
     virtual void reload() = 0;
 };
 
-#endif 
+#endif

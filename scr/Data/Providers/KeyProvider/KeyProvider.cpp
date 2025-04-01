@@ -1,7 +1,5 @@
 #include "KeyProvider.h"
 
-using namespace std;
-
 KeyProvider::KeyProvider(const string& filename) 
     : filename(filename) {}
 

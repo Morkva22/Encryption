@@ -23,4 +23,4 @@ private:
     void ensureFileExists() const;
 };
 
-#endif 
+#endif

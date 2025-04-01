@@ -13,4 +13,4 @@ private:
     map<string, shared_ptr<Cipher>> ciphers;
 };
 
-#endif 
+#endif

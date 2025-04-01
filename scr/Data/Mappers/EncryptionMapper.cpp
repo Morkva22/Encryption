@@ -1,4 +1,4 @@
-    #include "EncryptionMapper.h"
+#include "EncryptionMapper.h"
 
 EncryptionData EncryptionMapper::toDTO(const EncryptedDocument& doc) {
     return {

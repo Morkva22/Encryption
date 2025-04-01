@@ -22,25 +22,21 @@ void FileStorageAdapter::save(const EncryptedDocument& document) {
         file << hexData << "\n";
     }
 
-    std::vector<EncryptedDocument> FileStorageAdapter::loadAll() {
-        std::ifstream file(filePath);
-        if (!file) throw std::runtime_error("Failed to open file");
+vector<EncryptedDocument> FileStorageAdapter::loadAll() {
+    ifstream file(filePath);
+    if (!file) throw runtime_error("Can't open file");
 
-        std::vector<EncryptedDocument> documents;
-        std::string line;
-        
-        while (std::getline(file, line)) {
-            if (!line.empty()) {
-                auto dto = EncryptionMapper::fromStorageString(line);
-                // Конвертуємо з hex назад у бінарний формат
-                dto.encryptedText = XorCipher::fromHex(line);
-                documents.push_back(EncryptionMapper::toDomain(dto));
-            }
+    vector<EncryptedDocument> docs;
+    string line;
+    while (getline(file, line)) {
+        if (!line.empty()) {
+            auto dto = EncryptionMapper::fromStorageString(line);
+            dto.encryptedText = XorCipher::fromHex(line);
+            docs.push_back(EncryptionMapper::toDomain(dto));
         }
-        
-        return documents;
     }
-
+    return docs;
+}
     string FileStorageAdapter::getFilePath() const {
         return filePath;
     }

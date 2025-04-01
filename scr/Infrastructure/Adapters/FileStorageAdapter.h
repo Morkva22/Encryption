@@ -12,8 +12,8 @@ public:
     void save(const EncryptedDocument& document) override;
     vector<EncryptedDocument> loadAll() override;
     string getFilePath() const override;
-    
-    vector<string> readLines(const string& file_path);
+
+    static vector<string> readLines(const string& file_path);
     void writeLines(const string& file_path, const vector<string>& lines);
     void deleteFile(const string& filePath);
     bool fileExists(const string& file_path) const;
